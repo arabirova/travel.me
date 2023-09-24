@@ -43,6 +43,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F94AD7D2AC066F100D747A9 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				1F94AD752AC05FB700D747A9 /* RoutesViewController.swift */,
+				1F94AD772AC05FC100D747A9 /* GuidesViewController.swift */,
+				1F94AD792AC0641D00D747A9 /* MapViewController.swift */,
+				1F94AD7B2AC064A400D747A9 /* FavoritesViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		1FF32ADD2ABB77C2008EB819 = {
 			isa = PBXGroup;
 			children = (
@@ -62,13 +73,10 @@
 		1FF32AE82ABB77C2008EB819 /* travel.me */ = {
 			isa = PBXGroup;
 			children = (
+				1F94AD7D2AC066F100D747A9 /* ViewControllers */,
 				1FF32AE92ABB77C2008EB819 /* AppDelegate.swift */,
 				1FF32AEB2ABB77C2008EB819 /* SceneDelegate.swift */,
 				1F94AD732AC05E1B00D747A9 /* TabbarController.swift */,
-				1F94AD752AC05FB700D747A9 /* RoutesViewController.swift */,
-				1F94AD772AC05FC100D747A9 /* GuidesViewController.swift */,
-				1F94AD792AC0641D00D747A9 /* MapViewController.swift */,
-				1F94AD7B2AC064A400D747A9 /* FavoritesViewController.swift */,
 				1FF32AF22ABB77C4008EB819 /* Assets.xcassets */,
 				1FF32AF42ABB77C4008EB819 /* LaunchScreen.storyboard */,
 				1FF32AF72ABB77C4008EB819 /* Info.plist */,

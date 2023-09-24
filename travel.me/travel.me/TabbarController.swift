@@ -36,15 +36,14 @@ final class TabbarController: UITabBarController {
         
         self.viewControllers?.enumerated().forEach {
             $1.tabBarItem.title = dataSource[$0].title
-            
+            $1.tabBarItem.image = UIImage(named: dataSource[$0].iconName)?.withTintColor(.green)
+            $1.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: .zero, bottom: -5, right: .zero)
         }
     }
     
     private func wrappedInNavigationController(with: UIViewController, title: Any?) -> UINavigationController {
         return UINavigationController(rootViewController: with)
     }
-
-    
 }
 
 private enum TabBarItem: Int {
@@ -64,6 +63,19 @@ private enum TabBarItem: Int {
         case .favorites:
             return "Избранное"
         
+        }
+    }
+    
+    var iconName: String {
+        switch self {
+        case .routes:
+            return "routes"
+        case .guides:
+            return "guides"
+        case .map:
+            return "map"
+        case .favorites:
+            return "favorites"
         }
     }
 }
