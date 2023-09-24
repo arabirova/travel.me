@@ -50,8 +50,7 @@ class RouteCell: UITableViewCell {
     
     private func makeConstraint() {
         view.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(16)
-            make.bottom.equalToSuperview().inset(5)
+            make.top.bottom.equalToSuperview().inset(16)
             make.leading.trailing.equalToSuperview().inset(20)
         }
         
@@ -65,13 +64,11 @@ class RouteCell: UITableViewCell {
         nameLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(descriptionLabel.snp.top).inset(-5)
-            make.height.equalTo(43)
         }
         
         descriptionLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(10)
-            make.bottom.equalToSuperview().inset(4)
-            make.height.equalTo(42)
+            make.bottom.equalToSuperview().inset(5)
         }
 
     }
