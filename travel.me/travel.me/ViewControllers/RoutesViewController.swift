@@ -10,11 +10,21 @@ import SnapKit
 
 class RoutesViewController: UIViewController {
     
-    var routesPoints = Routes.allCases
     var routes: [RouteModel] = [
-        .init(imageURL: "https://34travel.me/media/upload/images/2021/November/kia-elnya/296A8833.jpg", name: "ОТ ЕЛЬНИ ДО ВОДОПАДА НА РЕКЕ ВЯТА", description: "Отправляемчя исследовать природные красоты и богатое архитектурное наследие"),
-        .init(imageURL: "https://34travel.me/media/upload/images/2021/November/kia-elnya/296A8833.jpg", name: "ОТ ЕЛЬНИ ДО ВОДОПАДА НА РЕКЕ ВЯТА", description: "Отправляемчя исследовать природные красоты и богатое архитектурное наследие"),
-        .init(imageURL: "https://34travel.me/media/upload/images/2021/November/kia-elnya/296A8833.jpg", name: "ОТ ЕЛЬНИ ДО ВОДОПАДА НА РЕКЕ ВЯТА", description: "Отправляемчя исследовать природные красоты и богатое архитектурное наследие")
+        .init(
+            imageURL: "https://34travel.me/media/upload/images/2021/November/kia-elnya/296A0597.jpg",
+            name: "ОТ ЕЛЬНИ ДО ВОДОПАДА НА РЕКЕ ВЯТА",
+            description: "Отправляемcя исследовать природные красоты и богатое архитектурное наследие."),
+        
+        .init(
+            imageURL: "https://34travel.me/media/upload/images/2021/November/VTB/IMG_5873.jpg",
+            name: "6 ИНТЕРЕСНЫХ МЕСТ НЕДАЛЕКО ОТ ВИТЕБСКА",
+            description: "Дендропарк, ботанический заказник, усадьба Репина и другое."),
+        
+        .init(
+            imageURL: "https://34travel.me/media/upload/images/2021/OCTOBER/postavy-i-okrestnosti/296A0135.jpg",
+            name: "ЕДЕМ В ПОСТАВЫ И ГУЛЯЕМ ПО ОКРЕСТНОСТИ",
+            description: "Осенью там особенно красиво")
     ]
     
     private lazy var tableView: UITableView = {
@@ -46,7 +56,7 @@ class RoutesViewController: UIViewController {
 
 extension RoutesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return routesPoints.count
+        return routes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

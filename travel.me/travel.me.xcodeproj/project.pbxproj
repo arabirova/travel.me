@@ -13,7 +13,6 @@
 		1F94AD7A2AC0641D00D747A9 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD792AC0641D00D747A9 /* MapViewController.swift */; };
 		1F94AD7C2AC064A400D747A9 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD7B2AC064A400D747A9 /* FavoritesViewController.swift */; };
 		1F94AD802AC07E9B00D747A9 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1F94AD7F2AC07E9B00D747A9 /* SnapKit */; };
-		1F94AD862AC084D500D747A9 /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD852AC084D500D747A9 /* Routes.swift */; };
 		1F94AD892AC0859900D747A9 /* RouteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD882AC0859900D747A9 /* RouteCell.swift */; };
 		1F94AD8C2AC08F5000D747A9 /* RouteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD8B2AC08F5000D747A9 /* RouteModel.swift */; };
 		1FF32AEA2ABB77C2008EB819 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF32AE92ABB77C2008EB819 /* AppDelegate.swift */; };
@@ -28,7 +27,6 @@
 		1F94AD772AC05FC100D747A9 /* GuidesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidesViewController.swift; sourceTree = "<group>"; };
 		1F94AD792AC0641D00D747A9 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		1F94AD7B2AC064A400D747A9 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
-		1F94AD852AC084D500D747A9 /* Routes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
 		1F94AD882AC0859900D747A9 /* RouteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteCell.swift; sourceTree = "<group>"; };
 		1F94AD8B2AC08F5000D747A9 /* RouteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteModel.swift; sourceTree = "<group>"; };
 		1FF32AE62ABB77C2008EB819 /* travel.me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = travel.me.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,14 +58,6 @@
 				1F94AD7B2AC064A400D747A9 /* FavoritesViewController.swift */,
 			);
 			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		1F94AD842AC084BC00D747A9 /* Enum */ = {
-			isa = PBXGroup;
-			children = (
-				1F94AD852AC084D500D747A9 /* Routes.swift */,
-			);
-			path = Enum;
 			sourceTree = "<group>";
 		};
 		1F94AD872AC0856F00D747A9 /* Cells */ = {
@@ -107,7 +97,6 @@
 			children = (
 				1F94AD8A2AC08F1B00D747A9 /* Models */,
 				1F94AD872AC0856F00D747A9 /* Cells */,
-				1F94AD842AC084BC00D747A9 /* Enum */,
 				1F94AD7D2AC066F100D747A9 /* ViewControllers */,
 				1FF32AE92ABB77C2008EB819 /* AppDelegate.swift */,
 				1FF32AEB2ABB77C2008EB819 /* SceneDelegate.swift */,
@@ -196,7 +185,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F94AD742AC05E1B00D747A9 /* TabbarController.swift in Sources */,
-				1F94AD862AC084D500D747A9 /* Routes.swift in Sources */,
 				1F94AD7A2AC0641D00D747A9 /* MapViewController.swift in Sources */,
 				1F94AD8C2AC08F5000D747A9 /* RouteModel.swift in Sources */,
 				1F94AD7C2AC064A400D747A9 /* FavoritesViewController.swift in Sources */,
