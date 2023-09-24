@@ -12,6 +12,9 @@
 		1F94AD782AC05FC100D747A9 /* GuidesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD772AC05FC100D747A9 /* GuidesViewController.swift */; };
 		1F94AD7A2AC0641D00D747A9 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD792AC0641D00D747A9 /* MapViewController.swift */; };
 		1F94AD7C2AC064A400D747A9 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD7B2AC064A400D747A9 /* FavoritesViewController.swift */; };
+		1F94AD802AC07E9B00D747A9 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1F94AD7F2AC07E9B00D747A9 /* SnapKit */; };
+		1F94AD892AC0859900D747A9 /* RouteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD882AC0859900D747A9 /* RouteCell.swift */; };
+		1F94AD8C2AC08F5000D747A9 /* RouteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD8B2AC08F5000D747A9 /* RouteModel.swift */; };
 		1FF32AEA2ABB77C2008EB819 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF32AE92ABB77C2008EB819 /* AppDelegate.swift */; };
 		1FF32AEC2ABB77C2008EB819 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF32AEB2ABB77C2008EB819 /* SceneDelegate.swift */; };
 		1FF32AF32ABB77C4008EB819 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FF32AF22ABB77C4008EB819 /* Assets.xcassets */; };
@@ -24,6 +27,8 @@
 		1F94AD772AC05FC100D747A9 /* GuidesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidesViewController.swift; sourceTree = "<group>"; };
 		1F94AD792AC0641D00D747A9 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		1F94AD7B2AC064A400D747A9 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		1F94AD882AC0859900D747A9 /* RouteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteCell.swift; sourceTree = "<group>"; };
+		1F94AD8B2AC08F5000D747A9 /* RouteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteModel.swift; sourceTree = "<group>"; };
 		1FF32AE62ABB77C2008EB819 /* travel.me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = travel.me.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FF32AE92ABB77C2008EB819 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1FF32AEB2ABB77C2008EB819 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -37,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F94AD802AC07E9B00D747A9 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,6 +58,22 @@
 				1F94AD7B2AC064A400D747A9 /* FavoritesViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		1F94AD872AC0856F00D747A9 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				1F94AD882AC0859900D747A9 /* RouteCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		1F94AD8A2AC08F1B00D747A9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1F94AD8B2AC08F5000D747A9 /* RouteModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		1FF32ADD2ABB77C2008EB819 = {
@@ -73,6 +95,8 @@
 		1FF32AE82ABB77C2008EB819 /* travel.me */ = {
 			isa = PBXGroup;
 			children = (
+				1F94AD8A2AC08F1B00D747A9 /* Models */,
+				1F94AD872AC0856F00D747A9 /* Cells */,
 				1F94AD7D2AC066F100D747A9 /* ViewControllers */,
 				1FF32AE92ABB77C2008EB819 /* AppDelegate.swift */,
 				1FF32AEB2ABB77C2008EB819 /* SceneDelegate.swift */,
@@ -100,6 +124,9 @@
 			dependencies = (
 			);
 			name = travel.me;
+			packageProductDependencies = (
+				1F94AD7F2AC07E9B00D747A9 /* SnapKit */,
+			);
 			productName = travel.me;
 			productReference = 1FF32AE62ABB77C2008EB819 /* travel.me.app */;
 			productType = "com.apple.product-type.application";
@@ -128,6 +155,9 @@
 				Base,
 			);
 			mainGroup = 1FF32ADD2ABB77C2008EB819;
+			packageReferences = (
+				1F94AD7E2AC07E9B00D747A9 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 1FF32AE72ABB77C2008EB819 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -156,8 +186,10 @@
 			files = (
 				1F94AD742AC05E1B00D747A9 /* TabbarController.swift in Sources */,
 				1F94AD7A2AC0641D00D747A9 /* MapViewController.swift in Sources */,
+				1F94AD8C2AC08F5000D747A9 /* RouteModel.swift in Sources */,
 				1F94AD7C2AC064A400D747A9 /* FavoritesViewController.swift in Sources */,
 				1FF32AEA2ABB77C2008EB819 /* AppDelegate.swift in Sources */,
+				1F94AD892AC0859900D747A9 /* RouteCell.swift in Sources */,
 				1FF32AEC2ABB77C2008EB819 /* SceneDelegate.swift in Sources */,
 				1F94AD762AC05FB700D747A9 /* RoutesViewController.swift in Sources */,
 				1F94AD782AC05FC100D747A9 /* GuidesViewController.swift in Sources */,
@@ -366,6 +398,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1F94AD7E2AC07E9B00D747A9 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1F94AD7F2AC07E9B00D747A9 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1F94AD7E2AC07E9B00D747A9 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1FF32ADE2ABB77C2008EB819 /* Project object */;
 }
