@@ -12,7 +12,8 @@ import GoogleMaps
 class RouteDetailsViewController: UIViewController {
     
     private var route: RouteModel
-    
+    var markers: [GMSMarker] = []
+    var coordinates: [CLLocationCoordinate2D] = []
     
     init(route: RouteModel) {
         self.route = route

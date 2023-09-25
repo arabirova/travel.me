@@ -12,13 +12,15 @@ class RouteModel {
     var name: String
     var description: String
     var detailDescription: String
-    var coordinate: String
+    var lat: Double
+    var lon: Double
     
-    init(imageURL: String, name: String, description: String, detailDescription: String, coordinate: String) {
+    init(imageURL: String, name: String, description: String, detailDescription: String, lat: Double, lon: Double) {
         self.imageURL = imageURL
         self.name = name
         self.description = description
         self.detailDescription = detailDescription
-        self.coordinate = coordinate
+        self.lat = lat
+        self.lon = lon
     }
 }
