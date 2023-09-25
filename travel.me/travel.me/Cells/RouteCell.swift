@@ -22,6 +22,7 @@ class RouteCell: UITableViewCell {
         let image = UIImageView()
         image.layer.cornerRadius = 15
         image.clipsToBounds = true
+        image.image = UIImage(named: "travel")
         return image
     }()
     
@@ -85,8 +86,6 @@ class RouteCell: UITableViewCell {
         }
         self.nameLabel.text = route.name
         self.descriptionLabel.text = route.description
-        
-        
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

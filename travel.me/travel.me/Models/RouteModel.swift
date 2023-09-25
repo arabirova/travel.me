@@ -11,10 +11,12 @@ class RouteModel {
     var imageURL: String
     var name: String
     var description: String
+    var detailDescription: String
     
-    init(imageURL: String, name: String, description: String) {
+    init(imageURL: String, name: String, description: String, detailDescription: String) {
         self.imageURL = imageURL
         self.name = name
         self.description = description
+        self.detailDescription = detailDescription
     }
 }
