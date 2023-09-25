@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F8C015E2AC222A200C48DA5 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 1F8C015D2AC222A200C48DA5 /* GoogleMaps */; };
+		1F8C01602AC222A200C48DA5 /* GoogleMapsBase in Frameworks */ = {isa = PBXBuildFile; productRef = 1F8C015F2AC222A200C48DA5 /* GoogleMapsBase */; };
+		1F8C01622AC222A200C48DA5 /* GoogleMapsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 1F8C01612AC222A200C48DA5 /* GoogleMapsCore */; };
+		1F8C01642AC222A200C48DA5 /* GoogleMapsM4B in Frameworks */ = {isa = PBXBuildFile; productRef = 1F8C01632AC222A200C48DA5 /* GoogleMapsM4B */; };
 		1F94AD742AC05E1B00D747A9 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD732AC05E1B00D747A9 /* TabbarController.swift */; };
 		1F94AD762AC05FB700D747A9 /* RoutesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD752AC05FB700D747A9 /* RoutesViewController.swift */; };
 		1F94AD782AC05FC100D747A9 /* GuidesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD772AC05FC100D747A9 /* GuidesViewController.swift */; };
@@ -44,6 +48,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F8C01602AC222A200C48DA5 /* GoogleMapsBase in Frameworks */,
+				1F8C01622AC222A200C48DA5 /* GoogleMapsCore in Frameworks */,
+				1F8C015E2AC222A200C48DA5 /* GoogleMaps in Frameworks */,
+				1F8C01642AC222A200C48DA5 /* GoogleMapsM4B in Frameworks */,
 				1F94AD802AC07E9B00D747A9 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -55,10 +63,10 @@
 			isa = PBXGroup;
 			children = (
 				1F94AD752AC05FB700D747A9 /* RoutesViewController.swift */,
+				1F94AD8D2AC1FA8D00D747A9 /* RouteDetailsViewController.swift */,
 				1F94AD772AC05FC100D747A9 /* GuidesViewController.swift */,
 				1F94AD792AC0641D00D747A9 /* MapViewController.swift */,
 				1F94AD7B2AC064A400D747A9 /* FavoritesViewController.swift */,
-				1F94AD8D2AC1FA8D00D747A9 /* RouteDetailsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -129,6 +137,10 @@
 			name = travel.me;
 			packageProductDependencies = (
 				1F94AD7F2AC07E9B00D747A9 /* SnapKit */,
+				1F8C015D2AC222A200C48DA5 /* GoogleMaps */,
+				1F8C015F2AC222A200C48DA5 /* GoogleMapsBase */,
+				1F8C01612AC222A200C48DA5 /* GoogleMapsCore */,
+				1F8C01632AC222A200C48DA5 /* GoogleMapsM4B */,
 			);
 			productName = travel.me;
 			productReference = 1FF32AE62ABB77C2008EB819 /* travel.me.app */;
@@ -160,6 +172,7 @@
 			mainGroup = 1FF32ADD2ABB77C2008EB819;
 			packageReferences = (
 				1F94AD7E2AC07E9B00D747A9 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				1F8C015C2AC222A200C48DA5 /* XCRemoteSwiftPackageReference "GoogleMaps-SP" */,
 			);
 			productRefGroup = 1FF32AE72ABB77C2008EB819 /* Products */;
 			projectDirPath = "";
@@ -404,6 +417,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1F8C015C2AC222A200C48DA5 /* XCRemoteSwiftPackageReference "GoogleMaps-SP" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/YAtechnologies/GoogleMaps-SP";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.2.0;
+			};
+		};
 		1F94AD7E2AC07E9B00D747A9 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -415,6 +436,26 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1F8C015D2AC222A200C48DA5 /* GoogleMaps */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1F8C015C2AC222A200C48DA5 /* XCRemoteSwiftPackageReference "GoogleMaps-SP" */;
+			productName = GoogleMaps;
+		};
+		1F8C015F2AC222A200C48DA5 /* GoogleMapsBase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1F8C015C2AC222A200C48DA5 /* XCRemoteSwiftPackageReference "GoogleMaps-SP" */;
+			productName = GoogleMapsBase;
+		};
+		1F8C01612AC222A200C48DA5 /* GoogleMapsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1F8C015C2AC222A200C48DA5 /* XCRemoteSwiftPackageReference "GoogleMaps-SP" */;
+			productName = GoogleMapsCore;
+		};
+		1F8C01632AC222A200C48DA5 /* GoogleMapsM4B */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1F8C015C2AC222A200C48DA5 /* XCRemoteSwiftPackageReference "GoogleMaps-SP" */;
+			productName = GoogleMapsM4B;
+		};
 		1F94AD7F2AC07E9B00D747A9 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1F94AD7E2AC07E9B00D747A9 /* XCRemoteSwiftPackageReference "SnapKit" */;

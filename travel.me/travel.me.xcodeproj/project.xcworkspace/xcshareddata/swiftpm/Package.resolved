@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "googlemaps-sp",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/YAtechnologies/GoogleMaps-SP",
+      "state" : {
+        "revision" : "684ea6db362feaefdfcff89356e446bec8bcde3d",
+        "version" : "7.2.0"
+      }
+    },
+    {
       "identity" : "snapkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SnapKit/SnapKit.git",
