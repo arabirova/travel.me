@@ -29,18 +29,25 @@ class RouteDetailsViewController: UIViewController {
         return image
     }()
     
+    private lazy var imageShadow: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "shadow")
+        return image
+    }()
+    
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
         label.textAlignment = .center
-        label.numberOfLines = 2
+        label.textColor = .white
+        label.numberOfLines = 3
         return label
     }()
     
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
-        label.numberOfLines = 10
+        label.font = .italicSystemFont(ofSize: 13)
+        label.numberOfLines = 100
         return label
     }()
     
@@ -51,6 +58,7 @@ class RouteDetailsViewController: UIViewController {
     
     private func makeUI() {
         self.view.addSubview(image)
+        self.view.addSubview(imageShadow)
         self.view.addSubview(nameLabel)
         self.view.addSubview(descriptionLabel)
         self.view.addSubview(map)
@@ -58,26 +66,33 @@ class RouteDetailsViewController: UIViewController {
     
     private func makeConstraint() {
         image.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(nameLabel.snp.top).inset(-5)
-            make.height.equalTo(237)
-            make.width.equalTo(343)
+            make.top.equalToSuperview()
+            make.bottom.equalTo(descriptionLabel.snp.top).inset(-10)
+            make.height.equalTo(250)
+            make.width.equalToSuperview()
+        }
+        
+        imageShadow.snp.makeConstraints { make in
+            make.bottom.equalTo(image.snp.bottom)
+            make.width.equalToSuperview()
+            make.height.equalTo(150)
         }
         
         nameLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().offset(16)
-            make.bottom.equalTo(descriptionLabel.snp.top).inset(-5)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(image.snp.bottom).offset(-10)
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().offset(16)
-            make.bottom.equalTo(map.snp.top).inset(-5)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.bottom.equalTo(map.snp.top).inset(-10)
         }
         
         map.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().offset(16)
-            make.height.width.equalTo(50)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.height.width.equalTo(343)
             
         }
     }
@@ -85,7 +100,6 @@ class RouteDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        title = "Маршрут"
         makeUI()
         makeConstraint()
         set()
