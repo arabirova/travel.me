@@ -33,7 +33,13 @@ class RouteDetailsViewController: UIViewController {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
         label.textAlignment = .center
-        label.numberOfLines = 2
+        label.numberOfLines = 3
+        label.textColor = .white
+        label.layer.shadowColor = UIColor.black.cgColor
+        label.layer.shadowRadius = 2.0
+        label.layer.shadowOpacity = 10.0
+        label.layer.shadowOffset = CGSize(width: 4, height: 4)
+        label.layer.masksToBounds = false
         return label
     }()
     
@@ -60,13 +66,13 @@ class RouteDetailsViewController: UIViewController {
         image.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(nameLabel.snp.top).inset(-5)
+            make.bottom.equalTo(nameLabel.snp.top).offset(50)
             make.height.equalTo(237)
             make.width.equalTo(343)
         }
         
         nameLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().offset(16)
+            make.leading.trailing.equalToSuperview().inset(16)
             make.bottom.equalTo(descriptionLabel.snp.top).inset(-5)
         }
         
