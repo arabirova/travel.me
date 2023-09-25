@@ -36,12 +36,12 @@ class RouteCell: UITableViewCell {
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
-        label.numberOfLines = 2
+        label.numberOfLines = 3
         return label
     }()
     
     private func makeUI() {
-        self.contentView.backgroundColor = .lightGray
+        self.contentView.backgroundColor = UIColor(red: 0.951, green: 0.951, blue: 0.951, alpha: 1)
         self.contentView.addSubview(view)
         self.view.addSubview(image)
         self.view.addSubview(nameLabel)
@@ -67,8 +67,8 @@ class RouteCell: UITableViewCell {
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(10)
-            make.bottom.equalToSuperview().inset(5)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview().inset(12)
         }
 
     }
@@ -98,5 +98,10 @@ class RouteCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        image.image = UIImage(named: "travel")
     }
 }

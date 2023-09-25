@@ -24,13 +24,27 @@ class RoutesViewController: UIViewController {
         .init(
             imageURL: "https://34travel.me/media/upload/images/2021/OCTOBER/postavy-i-okrestnosti/296A0135.jpg",
             name: "ЕДЕМ В ПОСТАВЫ И ГУЛЯЕМ ПО ОКРЕСТНОСТИ",
-            description: "Осенью там особенно красиво")
+            description: "Осенью там особенно красиво..."),
+        
+            .init(imageURL: "https://34travel.me/media/upload/images/2021/OCTOBER/kia-museums/zaslauje/296A0405.jpg", name: "МУЗЕИ ПОД ОТКРЫТЫМ НЕБОМ НЕДАЛЕКО ОТ МИНСКА", description: "Хрупкое наследие деревянной архитектуры."),
+        
+            .init(imageURL: "https://34travel.me/media/upload/images/2021/SEPTEMBER/kia-navahradak/296A9571.jpg", name: "НАСЫЩЕННОЕ ПУТЕШЕСТВИЕ ПО НОВОГРУДЧИНЕ", description: "Россыпи достопримечательностей и невероятные холмистые пейзажи."),
+        
+            .init(imageURL: "https://34travel.me/media/upload/images/2021/JULY/kia-zhemyslavl/296A8193.jpg", name: "УНИКАЛЬНЫЕ УСАДЬБЫ И НЕОГОТИЧЕСКИЕ КОСТЕЛЫ", description: "Пышный дворец, дом-крепость и целая оссыпь неоготического наследия."),
+        
+            .init(imageURL: "https://34travel.me/media/upload/images/2021/JUNE/braslau/IMG_7724.jpg", name: "ЕДЕМ В ОЗЕРНЫЙ КРАЙ", description: "Достопримечательности, природные места и базы отдыха в самом курортном регионе."),
+        
+            .init(imageURL: "https://34travel.me/media/upload/images/2021/MAY/kia-brest/296A4809.jpg", name: "БОЛЬШОЕ ПУТЕШЕСТВИЕ ПО БРЕСТСКОЙ ОБЛАСТИ", description: "Все самое интересное в Бресте и окрестностях за одну поездку."),
+        .init(imageURL: "https://34travel.me/media/upload/images/2020/NOVEMBER/grodno/1vertelishki2.JPG", name: "ЕДЕМ ПО ГРОДНЕНСКОМУ РАЙОНУ", description: "Дворцы, храмы и советское наследие - что посмотреть в окрестностях королевского города."),
+        
+            .init(imageURL: "https://34travel.me/media/posts/5ec65cf25b4ee-1500.jpg", name: "ОТ ЛЮБАНСКИХ КАРЬЕРОВ ДО ТАИНСТВЕННОЙ ПИРАМИДЫ", description: "Карьеры с лазурной водой и солигорские терриконы, уединенные церкви и пирамида на кладбище.")
     ]
     
     private lazy var tableView: UITableView = {
         let table = UITableView()
         table.dataSource = self
         table.delegate = self
+        table.separatorStyle = .none
         table.register(RouteCell.self, forCellReuseIdentifier: RouteCell.id)
         return table
     }()
@@ -38,9 +52,20 @@ class RoutesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        title = "Маршруты"
+        makeTitle()
         makeUI()
         makeConstraints()
+    }
+    
+    private func makeTitle() {
+        let titleLabel = UILabel()
+        titleLabel.text = "#Маршруты"
+        titleLabel.textColor = .systemGreen
+        titleLabel.font = .boldSystemFont(ofSize: 24)
+        titleLabel.sizeToFit()
+
+        let leftItem = UIBarButtonItem(customView: titleLabel)
+        self.navigationItem.leftBarButtonItem = leftItem
     }
     
     private func makeUI() {
@@ -68,5 +93,9 @@ extension RoutesViewController: UITableViewDataSource {
 }
 
 extension RoutesViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let detailVC = RouteDetailsViewController()
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
 }
