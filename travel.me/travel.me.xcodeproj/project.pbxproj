@@ -7,16 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F8C015E2AC222A200C48DA5 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 1F8C015D2AC222A200C48DA5 /* GoogleMaps */; };
-		1F8C01602AC222A200C48DA5 /* GoogleMapsBase in Frameworks */ = {isa = PBXBuildFile; productRef = 1F8C015F2AC222A200C48DA5 /* GoogleMapsBase */; };
-		1F8C01622AC222A200C48DA5 /* GoogleMapsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 1F8C01612AC222A200C48DA5 /* GoogleMapsCore */; };
-		1F8C01642AC222A200C48DA5 /* GoogleMapsM4B in Frameworks */ = {isa = PBXBuildFile; productRef = 1F8C01632AC222A200C48DA5 /* GoogleMapsM4B */; };
 		1F94AD742AC05E1B00D747A9 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD732AC05E1B00D747A9 /* TabbarController.swift */; };
 		1F94AD762AC05FB700D747A9 /* RoutesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD752AC05FB700D747A9 /* RoutesViewController.swift */; };
 		1F94AD782AC05FC100D747A9 /* GuidesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD772AC05FC100D747A9 /* GuidesViewController.swift */; };
 		1F94AD7A2AC0641D00D747A9 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD792AC0641D00D747A9 /* MapViewController.swift */; };
 		1F94AD7C2AC064A400D747A9 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD7B2AC064A400D747A9 /* FavoritesViewController.swift */; };
-		1F94AD802AC07E9B00D747A9 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1F94AD7F2AC07E9B00D747A9 /* SnapKit */; };
 		1F94AD892AC0859900D747A9 /* RouteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD882AC0859900D747A9 /* RouteCell.swift */; };
 		1F94AD8C2AC08F5000D747A9 /* RouteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD8B2AC08F5000D747A9 /* RouteModel.swift */; };
 		1F94AD8E2AC1FA8D00D747A9 /* RouteDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD8D2AC1FA8D00D747A9 /* RouteDetailsViewController.swift */; };
@@ -24,6 +19,7 @@
 		1FF32AEC2ABB77C2008EB819 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF32AEB2ABB77C2008EB819 /* SceneDelegate.swift */; };
 		1FF32AF32ABB77C4008EB819 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FF32AF22ABB77C4008EB819 /* Assets.xcassets */; };
 		1FF32AF62ABB77C4008EB819 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FF32AF42ABB77C4008EB819 /* LaunchScreen.storyboard */; };
+		C5815D4643A1E65BC25AB6AB /* Pods_travel_me.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E617C4E4D7A45CE4A8470F30 /* Pods_travel_me.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +37,9 @@
 		1FF32AF22ABB77C4008EB819 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1FF32AF52ABB77C4008EB819 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1FF32AF72ABB77C4008EB819 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		419F446C694F2EDAE593BA29 /* Pods-travel.me.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-travel.me.release.xcconfig"; path = "Target Support Files/Pods-travel.me/Pods-travel.me.release.xcconfig"; sourceTree = "<group>"; };
+		615CF1F4748B25CEBB6F26EF /* Pods-travel.me.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-travel.me.debug.xcconfig"; path = "Target Support Files/Pods-travel.me/Pods-travel.me.debug.xcconfig"; sourceTree = "<group>"; };
+		E617C4E4D7A45CE4A8470F30 /* Pods_travel_me.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_travel_me.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,11 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F8C01602AC222A200C48DA5 /* GoogleMapsBase in Frameworks */,
-				1F8C01622AC222A200C48DA5 /* GoogleMapsCore in Frameworks */,
-				1F8C015E2AC222A200C48DA5 /* GoogleMaps in Frameworks */,
-				1F8C01642AC222A200C48DA5 /* GoogleMapsM4B in Frameworks */,
-				1F94AD802AC07E9B00D747A9 /* SnapKit in Frameworks */,
+				C5815D4643A1E65BC25AB6AB /* Pods_travel_me.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +87,8 @@
 			children = (
 				1FF32AE82ABB77C2008EB819 /* travel.me */,
 				1FF32AE72ABB77C2008EB819 /* Products */,
+				6F21D0528F13233C7C1E9A8D /* Pods */,
+				F61CD1047A5D52088AD4D97B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -119,6 +116,23 @@
 			path = travel.me;
 			sourceTree = "<group>";
 		};
+		6F21D0528F13233C7C1E9A8D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				615CF1F4748B25CEBB6F26EF /* Pods-travel.me.debug.xcconfig */,
+				419F446C694F2EDAE593BA29 /* Pods-travel.me.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		F61CD1047A5D52088AD4D97B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E617C4E4D7A45CE4A8470F30 /* Pods_travel_me.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -126,22 +140,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1FF32AFA2ABB77C4008EB819 /* Build configuration list for PBXNativeTarget "travel.me" */;
 			buildPhases = (
+				0492B43E59A7255B2E4582F1 /* [CP] Check Pods Manifest.lock */,
 				1FF32AE22ABB77C2008EB819 /* Sources */,
 				1FF32AE32ABB77C2008EB819 /* Frameworks */,
 				1FF32AE42ABB77C2008EB819 /* Resources */,
+				D78C6068936994A0830E81F5 /* [CP] Embed Pods Frameworks */,
+				0C92970C91B13D86C2690DCB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = travel.me;
-			packageProductDependencies = (
-				1F94AD7F2AC07E9B00D747A9 /* SnapKit */,
-				1F8C015D2AC222A200C48DA5 /* GoogleMaps */,
-				1F8C015F2AC222A200C48DA5 /* GoogleMapsBase */,
-				1F8C01612AC222A200C48DA5 /* GoogleMapsCore */,
-				1F8C01632AC222A200C48DA5 /* GoogleMapsM4B */,
-			);
 			productName = travel.me;
 			productReference = 1FF32AE62ABB77C2008EB819 /* travel.me.app */;
 			productType = "com.apple.product-type.application";
@@ -170,10 +180,6 @@
 				Base,
 			);
 			mainGroup = 1FF32ADD2ABB77C2008EB819;
-			packageReferences = (
-				1F94AD7E2AC07E9B00D747A9 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				1F8C015C2AC222A200C48DA5 /* XCRemoteSwiftPackageReference "GoogleMaps-SP" */,
-			);
 			productRefGroup = 1FF32AE72ABB77C2008EB819 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -194,6 +200,65 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0492B43E59A7255B2E4582F1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-travel.me-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		0C92970C91B13D86C2690DCB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-travel.me/Pods-travel.me-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-travel.me/Pods-travel.me-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-travel.me/Pods-travel.me-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D78C6068936994A0830E81F5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-travel.me/Pods-travel.me-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-travel.me/Pods-travel.me-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-travel.me/Pods-travel.me-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1FF32AE22ABB77C2008EB819 /* Sources */ = {
@@ -343,6 +408,7 @@
 		};
 		1FF32AFB2ABB77C4008EB819 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 615CF1F4748B25CEBB6F26EF /* Pods-travel.me.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -369,6 +435,7 @@
 		};
 		1FF32AFC2ABB77C4008EB819 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 419F446C694F2EDAE593BA29 /* Pods-travel.me.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -415,53 +482,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		1F8C015C2AC222A200C48DA5 /* XCRemoteSwiftPackageReference "GoogleMaps-SP" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/YAtechnologies/GoogleMaps-SP";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.2.0;
-			};
-		};
-		1F94AD7E2AC07E9B00D747A9 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		1F8C015D2AC222A200C48DA5 /* GoogleMaps */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1F8C015C2AC222A200C48DA5 /* XCRemoteSwiftPackageReference "GoogleMaps-SP" */;
-			productName = GoogleMaps;
-		};
-		1F8C015F2AC222A200C48DA5 /* GoogleMapsBase */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1F8C015C2AC222A200C48DA5 /* XCRemoteSwiftPackageReference "GoogleMaps-SP" */;
-			productName = GoogleMapsBase;
-		};
-		1F8C01612AC222A200C48DA5 /* GoogleMapsCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1F8C015C2AC222A200C48DA5 /* XCRemoteSwiftPackageReference "GoogleMaps-SP" */;
-			productName = GoogleMapsCore;
-		};
-		1F8C01632AC222A200C48DA5 /* GoogleMapsM4B */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1F8C015C2AC222A200C48DA5 /* XCRemoteSwiftPackageReference "GoogleMaps-SP" */;
-			productName = GoogleMapsM4B;
-		};
-		1F94AD7F2AC07E9B00D747A9 /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1F94AD7E2AC07E9B00D747A9 /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1FF32ADE2ABB77C2008EB819 /* Project object */;
 }
