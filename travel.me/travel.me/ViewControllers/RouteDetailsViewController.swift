@@ -101,9 +101,12 @@ class RouteDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        getCoordinate()
         makeUI()
         makeConstraint()
         set()
+        
+        
     }
     
     private func set() {
@@ -147,11 +150,15 @@ class RouteDetailsViewController: UIViewController {
         markers.append(marker)
     }
 
-    
     private func getCoordinate() {
         guard let lat = Double(route.lat),
               let long = Double(route.long) else { return }
         let coord = CLLocationCoordinate2D(latitude: lat, longitude: long)
         self.createMarker(coordinate: coord)
+        self.moveCamera(to: coord)
+    }
+    
+    private func moveCamera(to: CLLocationCoordinate2D) {
+        map.camera = GMSCameraPosition(target: to, zoom: 10)
     }
 }
