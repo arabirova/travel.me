@@ -120,8 +120,38 @@ class RouteDetailsViewController: UIViewController {
         descriptionLabel.text = route.detailDescription
     }
     
+    private func createMarker(coordinate:CLLocationCoordinate2D) {
+        let marker = GMSMarker(position: coordinate)
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 0
+        view.distribution = .fill
+        let image = UIImageView()
+        view.addArrangedSubview(image)
+        image.image = UIImage(systemName: "gear")
+        image.contentMode = .scaleAspectFit
+        
+        
+        image.snp.makeConstraints { make in
+            make.height.width.equalTo(10)
+        }
+        
+        view.snp.makeConstraints { make in
+            make.height.equalTo(20)
+            make.width.equalTo(20)
+            
+        }
+        
+        marker.iconView = view
+        marker.map = map
+        markers.append(marker)
+    }
+
+    
     private func getCoordinate() {
-        
-        
+        guard let lat = Double(route.lat),
+              let long = Double(route.long) else { return }
+        let coord = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        self.createMarker(coordinate: coord)
     }
 }
