@@ -12,6 +12,7 @@ class RouteModel {
     var name: String
     var description: String
     var detailDescription: String
+
     
     var asDict: [String: Any] {
         var dict = [String: Any]()

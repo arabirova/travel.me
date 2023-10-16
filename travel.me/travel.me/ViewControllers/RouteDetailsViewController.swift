@@ -119,4 +119,9 @@ class RouteDetailsViewController: UIViewController {
         nameLabel.text = route.name
         descriptionLabel.text = route.detailDescription
     }
+    
+    private func getCoordinate() {
+        
+        
+    }
 }
