@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F3A4D522ADC8164008B4680 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A4D512ADC8164008B4680 /* Environment.swift */; };
+		1F3A4D542ADD91A3008B4680 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F3A4D532ADD91A3008B4680 /* GoogleService-Info.plist */; };
 		1F94AD742AC05E1B00D747A9 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD732AC05E1B00D747A9 /* TabbarController.swift */; };
 		1F94AD762AC05FB700D747A9 /* RoutesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD752AC05FB700D747A9 /* RoutesViewController.swift */; };
 		1F94AD782AC05FC100D747A9 /* GuidesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD772AC05FC100D747A9 /* GuidesViewController.swift */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F3A4D512ADC8164008B4680 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		1F3A4D532ADD91A3008B4680 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1F94AD732AC05E1B00D747A9 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 		1F94AD752AC05FB700D747A9 /* RoutesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesViewController.swift; sourceTree = "<group>"; };
 		1F94AD772AC05FC100D747A9 /* GuidesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidesViewController.swift; sourceTree = "<group>"; };
@@ -111,7 +115,9 @@
 				1F94AD732AC05E1B00D747A9 /* TabbarController.swift */,
 				1FF32AF22ABB77C4008EB819 /* Assets.xcassets */,
 				1FF32AF42ABB77C4008EB819 /* LaunchScreen.storyboard */,
+				1F3A4D532ADD91A3008B4680 /* GoogleService-Info.plist */,
 				1FF32AF72ABB77C4008EB819 /* Info.plist */,
+				1F3A4D512ADC8164008B4680 /* Environment.swift */,
 			);
 			path = travel.me;
 			sourceTree = "<group>";
@@ -196,6 +202,7 @@
 			files = (
 				1FF32AF62ABB77C4008EB819 /* LaunchScreen.storyboard in Resources */,
 				1FF32AF32ABB77C4008EB819 /* Assets.xcassets in Resources */,
+				1F3A4D542ADD91A3008B4680 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +279,7 @@
 				1FF32AEA2ABB77C2008EB819 /* AppDelegate.swift in Sources */,
 				1F94AD892AC0859900D747A9 /* RouteCell.swift in Sources */,
 				1FF32AEC2ABB77C2008EB819 /* SceneDelegate.swift in Sources */,
+				1F3A4D522ADC8164008B4680 /* Environment.swift in Sources */,
 				1F94AD762AC05FB700D747A9 /* RoutesViewController.swift in Sources */,
 				1F94AD8E2AC1FA8D00D747A9 /* RouteDetailsViewController.swift in Sources */,
 				1F94AD782AC05FC100D747A9 /* GuidesViewController.swift in Sources */,
