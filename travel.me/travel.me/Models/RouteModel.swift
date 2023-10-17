@@ -26,16 +26,6 @@ class RouteModel {
         return dict
     }
     
-    init(imageURL: String, name: String, description: String, detailDescription: String, lat: String, long: String) {
-        self.imageURL = imageURL
-        self.name = name
-        self.description = description
-        self.detailDescription = detailDescription
-        self.lat = lat
-        self.long = long
-
-    }
-    
     init(dict: [String: Any]) throws {
         guard let imageURL = dict["imageURL"] as? String,
               let name = dict["name"] as? String,
