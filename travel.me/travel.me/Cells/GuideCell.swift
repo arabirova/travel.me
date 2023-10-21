@@ -1,15 +1,15 @@
 //
-//  RouteCell.swift
+//  GuideCell.swift
 //  travel.me
 //
-//  Created by Сашка on 24.09.23.
+//  Created by Сашка on 21.10.23.
 //
 
 import UIKit
 import SnapKit
 
-class RouteCell: UITableViewCell {
-    static let id = String(describing: RouteCell.self)
+class GuideCell: UITableViewCell {
+    static let id = String(describing: GuideCell.self)
     
     private lazy var view: UIView = {
         let view = UIView()
@@ -37,8 +37,8 @@ class RouteCell: UITableViewCell {
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
-        label.numberOfLines = 3
         label.textAlignment = .center
+        label.numberOfLines = 3
         return label
     }()
     
@@ -75,9 +75,9 @@ class RouteCell: UITableViewCell {
 
     }
     
-    func set(route: RouteModel) {
+    func set(guide: GuideModel) {
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            guard let url = URL(string: route.imageURL),
+            guard let url = URL(string: guide.imageURL),
                   let data = try? Data(contentsOf: url),
                   let image = UIImage(data: data)
             else { return }
@@ -85,8 +85,8 @@ class RouteCell: UITableViewCell {
                 self?.image.image = image
             }
         }
-        self.nameLabel.text = route.name
-        self.descriptionLabel.text = route.description
+        self.nameLabel.text = guide.name
+        self.descriptionLabel.text = guide.description
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
