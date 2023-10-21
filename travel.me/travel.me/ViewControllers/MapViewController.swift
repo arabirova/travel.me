@@ -81,9 +81,8 @@ class MapViewController: UIViewController {
         })
     }
     
-    private func createMarker(coordinate:CLLocationCoordinate2D) {
+    private func createMarker(coordinate:CLLocationCoordinate2D, dict: [String: Any]) {
         let marker = GMSMarker(position: coordinate)
-        counter += 1
         let view = UIStackView()
         view.axis = .horizontal
         view.spacing = 0
@@ -103,7 +102,32 @@ class MapViewController: UIViewController {
         }
         
         marker.iconView = view
-        marker.userData = counter
+        marker.userData = dict
+        marker.map = map
+        markers.append(marker)
+    }
+    
+    private func createDetailMarker(coordinate:CLLocationCoordinate2D) {
+        let marker = GMSMarker(position: coordinate)
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 0
+        view.distribution = .fill
+        let image = UIImageView()
+        view.addArrangedSubview(image)
+        image.image = UIImage(named: "mapPoint")
+        image.contentMode = .scaleAspectFit
+        
+        
+        image.snp.makeConstraints { make in
+            make.height.width.equalTo(35)
+        }
+        
+        view.snp.makeConstraints { make in
+            make.height.width.equalTo(35)
+        }
+        
+        marker.iconView = view
         marker.map = map
         markers.append(marker)
     }
@@ -125,7 +149,10 @@ class MapViewController: UIViewController {
                 }
             }
             let name = point.name
-            self.createMarker(coordinate: coord)
+            let imageURL = point.imageURL
+            let description = point.description
+            let dict = ["name": name, "imageURL": imageURL, "description": description]
+            self.createMarker(coordinate: coord, dict: dict)
         }
     }
     
@@ -136,12 +163,17 @@ class MapViewController: UIViewController {
 
 extension MapViewController: GMSMapViewDelegate {
     
-    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker, point: MapModel) -> Bool {
-        guard let counter = marker.userData as?  Int else {
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        guard let data = marker.userData as? [String: Any] else {
             print("Не получлось достать каунтер из опционала")
             return true
         }
-        print("Мы достали каунтер из маркера, он = \(counter)")
+        
+              let name = data["name"] ?? ""
+              let description = data["description"] ?? ""
+              let imageURL = data["imageURL"] ?? ""
+
+        print("Мы достали каунтер из маркера, он = \(imageURL)")
         print("Координаты маркера - \(marker.position.latitude), \(marker.position.longitude)")
         return true
     }
