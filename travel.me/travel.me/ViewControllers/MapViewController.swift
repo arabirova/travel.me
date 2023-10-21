@@ -15,6 +15,7 @@ class MapViewController: UIViewController {
     var markers: [GMSMarker] = []
     var coordinates: CLLocationCoordinate2D =
         .init(latitude: 53.529167, longitude: 28.045) // это графический центр Беларуси для приблежения карты
+    private var counter = 0
     
     private lazy var map: GMSMapView = {
         let map = GMSMapView()
@@ -32,6 +33,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        map.delegate = self
         makeUI()
         makeConstraint()
         makeTitle()
@@ -79,35 +81,29 @@ class MapViewController: UIViewController {
         })
     }
     
-    private func createMarker(coordinate:CLLocationCoordinate2D, image: UIImageView, name: String) {
+    private func createMarker(coordinate:CLLocationCoordinate2D) {
         let marker = GMSMarker(position: coordinate)
+        counter += 1
         let view = UIStackView()
-        view.axis = .vertical
+        view.axis = .horizontal
         view.spacing = 0
         view.distribution = .fill
-        let label = UILabel()
-        label.text = name
-        let imageMarker = image
-        view.addArrangedSubview(imageMarker)
-        view.addArrangedSubview(label)
-        imageMarker.contentMode = .scaleAspectFit
+        let image = UIImageView()
+        view.addArrangedSubview(image)
+        image.image = UIImage(named: "mapPoint")
+        image.contentMode = .scaleAspectFit
         
         
-        imageMarker.snp.makeConstraints { make in
-            make.height.width.equalTo(50)
-        }
-        
-        label.snp.makeConstraints { make in
-            make.height.width.equalTo(21)
+        image.snp.makeConstraints { make in
+            make.height.width.equalTo(35)
         }
         
         view.snp.makeConstraints { make in
-            make.height.equalTo(100)
-            make.width.equalTo(100)
-            
+            make.height.width.equalTo(35)
         }
         
         marker.iconView = view
+        marker.userData = counter
         marker.map = map
         markers.append(marker)
     }
@@ -129,11 +125,24 @@ class MapViewController: UIViewController {
                 }
             }
             let name = point.name
-            self.createMarker(coordinate: coord, image: imageMarker, name: name)
+            self.createMarker(coordinate: coord)
         }
     }
     
     private func moveCamera(to: CLLocationCoordinate2D) {
         map.camera = GMSCameraPosition(target: to, zoom: 6)
+    }
+}
+
+extension MapViewController: GMSMapViewDelegate {
+    
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker, point: MapModel) -> Bool {
+        guard let counter = marker.userData as?  Int else {
+            print("Не получлось достать каунтер из опционала")
+            return true
+        }
+        print("Мы достали каунтер из маркера, он = \(counter)")
+        print("Координаты маркера - \(marker.position.latitude), \(marker.position.longitude)")
+        return true
     }
 }
