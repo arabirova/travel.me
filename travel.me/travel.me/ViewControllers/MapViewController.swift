@@ -10,15 +10,23 @@ import SnapKit
 import GoogleMaps
 
 class MapViewController: UIViewController {
-    
     var points: [MapModel] = []
     var markers: [GMSMarker] = []
     var coordinates: CLLocationCoordinate2D =
         .init(latitude: 53.529167, longitude: 28.045) // это графический центр Беларуси для приблежения карты
+    var selectedMarker: GMSMarker?
     
     private lazy var map: GMSMapView = {
         let map = GMSMapView()
         return map
+    }()
+    
+    private lazy var clearButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .brown
+        button.setTitle("Удалить", for: .normal)
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        return button
     }()
     
     init() {
@@ -32,6 +40,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        map.delegate = self
         makeUI()
         makeConstraint()
         makeTitle()
@@ -41,11 +50,18 @@ class MapViewController: UIViewController {
     
     private func makeUI() {
         self.view.addSubview(map)
+        self.view.addSubview(clearButton)
+
     }
     
     private func makeConstraint() {
         map.snp.makeConstraints { make in
             make.edges.equalTo(self.view.safeAreaLayoutGuide)
+        }
+        
+        clearButton.snp.makeConstraints { make in
+            make.bottom.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(5)
+            make.height.width.equalTo(50)
         }
     }
     
@@ -79,25 +95,50 @@ class MapViewController: UIViewController {
         })
     }
     
-    private func createMarker(coordinate:CLLocationCoordinate2D, image: UIImageView, name: String) {
+    private func createMarker(coordinate:CLLocationCoordinate2D, dict: [String: Any]) {
+        let marker = GMSMarker(position: coordinate)
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = 0
+        view.distribution = .fill
+        let image = UIImageView()
+        view.addArrangedSubview(image)
+        image.image = UIImage(named: "mapPoint")
+        image.contentMode = .scaleAspectFill
+        
+        
+        image.snp.makeConstraints { make in
+            make.height.width.equalTo(35)
+        }
+        
+        view.snp.makeConstraints { make in
+            make.height.width.equalTo(35)
+        }
+        
+        marker.iconView = view
+        marker.userData = dict
+        marker.map = map
+    }
+    
+    private func createDetailMarker(coordinate:CLLocationCoordinate2D, image: UIImageView, name: String) {
         let marker = GMSMarker(position: coordinate)
         let view = UIStackView()
         view.axis = .vertical
         view.spacing = 0
         view.distribution = .fill
-        let label = UILabel()
-        label.text = name
+        let nameLabel = UILabel()
+        nameLabel.text = name
         let imageMarker = image
         view.addArrangedSubview(imageMarker)
-        view.addArrangedSubview(label)
-        imageMarker.contentMode = .scaleAspectFit
+        view.addArrangedSubview(nameLabel)
+        imageMarker.contentMode = .scaleAspectFill
         
         
         imageMarker.snp.makeConstraints { make in
-            make.height.width.equalTo(50)
+            make.height.width.equalTo(55)
         }
         
-        label.snp.makeConstraints { make in
+        nameLabel.snp.makeConstraints { make in
             make.height.width.equalTo(21)
         }
         
@@ -109,7 +150,6 @@ class MapViewController: UIViewController {
         
         marker.iconView = view
         marker.map = map
-        markers.append(marker)
     }
     
     private func getCoordinate(point: MapModel) {
@@ -129,11 +169,47 @@ class MapViewController: UIViewController {
                 }
             }
             let name = point.name
-            self.createMarker(coordinate: coord, image: imageMarker, name: name)
+            let imageURL = point.imageURL
+            let description = point.description
+            let dict = ["name": name, "imageURL": imageURL, "description": description]
+            self.createMarker(coordinate: coord, dict: dict)
         }
     }
     
     private func moveCamera(to: CLLocationCoordinate2D) {
         map.camera = GMSCameraPosition(target: to, zoom: 6)
     }
+    
+    @objc private func buttonAction() {
+        map.clear()
+        readList()
+    }
+}
+
+extension MapViewController: GMSMapViewDelegate {
+    
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        guard let data = marker.userData as? [String: Any] else {
+            return true
+        }
+        marker.map = nil
+        let name = data["name"] as? String ?? ""
+        let imageURL = data["imageURL"] as? String ?? ""
+        let coordinate = marker.position
+        let imageView = UIImageView()
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+            guard let url = URL(string: imageURL),
+                  let data = try? Data(contentsOf: url),
+                  let image = UIImage(data: data)
+            else { return }
+            DispatchQueue.main.async { [weak self] in
+                imageView.image = image
+            }
+        }
+        
+        map.clear()
+        createDetailMarker(coordinate: coordinate, image: imageView, name: name)
+        return true
+    }
+    
 }
