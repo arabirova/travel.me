@@ -24,6 +24,16 @@ class GuideDetailsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private lazy var scrollView: UIScrollView = {
+        let scroll = UIScrollView()
+        return scroll
+    }()
+    
+    private lazy var contentView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
     private lazy var image: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "travel")
@@ -58,14 +68,25 @@ class GuideDetailsViewController: UIViewController {
     }()
     
     private func makeUI() {
-        self.view.addSubview(image)
-        self.view.addSubview(imageShadow)
-        self.view.addSubview(nameLabel)
-        self.view.addSubview(descriptionLabel)
-        self.view.addSubview(map)
+        self.view.addSubview(scrollView)
+        self.scrollView.addSubview(contentView)
+        self.contentView.addSubview(image)
+        self.contentView.addSubview(imageShadow)
+        self.contentView.addSubview(nameLabel)
+        self.contentView.addSubview(descriptionLabel)
+        self.contentView.addSubview(map)
     }
     
     private func makeConstraint() {
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            }
+
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.height.equalToSuperview()
+            }
+        
         image.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.bottom.equalTo(descriptionLabel.snp.top).inset(-10)
