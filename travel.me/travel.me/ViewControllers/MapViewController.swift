@@ -188,9 +188,8 @@ extension MapViewController: GMSMapViewDelegate {
                 imageView.image = image
             }
         }
-        marker.map = nil
-        points.removeAll()
         createDetailMarker(coordinate: coordinate, image: imageView, name: name)
+        marker.map = nil
         return true
     }
 }
