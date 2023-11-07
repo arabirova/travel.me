@@ -14,20 +14,12 @@ class MapViewController: UIViewController {
     var markers: [GMSMarker] = []
     var coordinates: CLLocationCoordinate2D =
         .init(latitude: 53.529167, longitude: 28.045) // это графический центр Беларуси для приблежения карты
-    var selectedMarker: GMSMarker?
     
     private lazy var map: GMSMapView = {
         let map = GMSMapView()
         return map
     }()
-    
-    private lazy var clearButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .brown
-        button.setTitle("Удалить", for: .normal)
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        return button
-    }()
+
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -40,28 +32,23 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        map.delegate = self
         makeUI()
         makeConstraint()
         makeTitle()
         moveCamera(to: coordinates)
         readList()
+        map.delegate = self
+
     }
     
     private func makeUI() {
         self.view.addSubview(map)
-        self.view.addSubview(clearButton)
 
     }
     
     private func makeConstraint() {
         map.snp.makeConstraints { make in
             make.edges.equalTo(self.view.safeAreaLayoutGuide)
-        }
-        
-        clearButton.snp.makeConstraints { make in
-            make.bottom.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(5)
-            make.height.width.equalTo(50)
         }
     }
     
@@ -76,6 +63,17 @@ class MapViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = leftItem
     }
     
+    private func moveCamera(to: CLLocationCoordinate2D) {
+        map.camera = GMSCameraPosition(target: to, zoom: 6)
+    }
+    
+    private func readList() {
+        Environment.ref.child("map").observeSingleEvent(of: .value, with: { [weak self] snapshot in
+            guard let mapDict = (snapshot.value as? [String: Any]) else { return }
+            self?.parseData(mapDict)
+        })
+    }
+    
     private func parseData(_ dict: [String: Any]) {
         points.removeAll()
         for (_, value) in dict {
@@ -88,11 +86,28 @@ class MapViewController: UIViewController {
         }
     }
     
-    private func readList() {
-        Environment.ref.child("map").observeSingleEvent(of: .value, with: { [weak self] snapshot in
-            guard let mapDict = (snapshot.value as? [String: Any]) else { return }
-            self?.parseData(mapDict)
-        })
+    private func getCoordinate(point: MapModel) {
+        for _ in points {
+            guard let lat = Double(point.lat),
+                  let long = Double(point.long)
+            else { return }
+            let coord = CLLocationCoordinate2D(latitude: lat, longitude: long)
+            let imageMarker = UIImageView()
+            DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+                guard let url = URL(string: point.imageURL),
+                      let data = try? Data(contentsOf: url),
+                      let image = UIImage(data: data)
+                else { return }
+                DispatchQueue.main.async { [weak self] in
+                    imageMarker.image = image
+                }
+            }
+            let name = point.name
+            let imageURL = point.imageURL
+            let description = point.description
+            let dict = ["name": name, "imageURL": imageURL, "description": description]
+            self.createMarker(coordinate: coord, dict: dict)
+        }
     }
     
     private func createMarker(coordinate:CLLocationCoordinate2D, dict: [String: Any]) {
@@ -128,6 +143,7 @@ class MapViewController: UIViewController {
         view.distribution = .fill
         let nameLabel = UILabel()
         nameLabel.text = name
+        nameLabel.textAlignment = .center
         let imageMarker = image
         view.addArrangedSubview(imageMarker)
         view.addArrangedSubview(nameLabel)
@@ -151,39 +167,6 @@ class MapViewController: UIViewController {
         marker.iconView = view
         marker.map = map
     }
-    
-    private func getCoordinate(point: MapModel) {
-        for _ in points {
-            guard let lat = Double(point.lat),
-                  let long = Double(point.long)
-            else { return }
-            let coord = CLLocationCoordinate2D(latitude: lat, longitude: long)
-            let imageMarker = UIImageView()
-            DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-                guard let url = URL(string: point.imageURL),
-                      let data = try? Data(contentsOf: url),
-                      let image = UIImage(data: data)
-                else { return }
-                DispatchQueue.main.async { [weak self] in
-                    imageMarker.image = image
-                }
-            }
-            let name = point.name
-            let imageURL = point.imageURL
-            let description = point.description
-            let dict = ["name": name, "imageURL": imageURL, "description": description]
-            self.createMarker(coordinate: coord, dict: dict)
-        }
-    }
-    
-    private func moveCamera(to: CLLocationCoordinate2D) {
-        map.camera = GMSCameraPosition(target: to, zoom: 6)
-    }
-    
-    @objc private func buttonAction() {
-        map.clear()
-        readList()
-    }
 }
 
 extension MapViewController: GMSMapViewDelegate {
@@ -192,7 +175,6 @@ extension MapViewController: GMSMapViewDelegate {
         guard let data = marker.userData as? [String: Any] else {
             return true
         }
-        marker.map = nil
         let name = data["name"] as? String ?? ""
         let imageURL = data["imageURL"] as? String ?? ""
         let coordinate = marker.position
@@ -206,10 +188,9 @@ extension MapViewController: GMSMapViewDelegate {
                 imageView.image = image
             }
         }
-        
-        map.clear()
+        marker.map = nil
+        points.removeAll()
         createDetailMarker(coordinate: coordinate, image: imageView, name: name)
         return true
     }
-    
 }
