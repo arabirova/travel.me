@@ -8,8 +8,8 @@ target 'travel.me' do
   # Pods for travel.me
       pod 'Firebase'
       pod 'Firebase/Auth'
-      pod 'SnapKit'
       pod ‘Firebase/Database’
+      pod 'SnapKit'
       pod ‘GoogleMaps’
 
 
