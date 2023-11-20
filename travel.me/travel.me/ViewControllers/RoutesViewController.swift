@@ -37,6 +37,7 @@ class RoutesViewController: UIViewController {
         makeUI()
         makeConstraints()
         readList()
+        changeNav()
     }
     
     private func makeTitle() {
@@ -78,6 +79,10 @@ class RoutesViewController: UIViewController {
             guard let routeDict = (snapshot.value as? [String: Any]) else { return }
             self?.parseData(routeDict)
         })
+    }
+    
+    private func changeNav() {
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }
 

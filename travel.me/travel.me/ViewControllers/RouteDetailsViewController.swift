@@ -127,8 +127,7 @@ class RouteDetailsViewController: UIViewController {
         makeUI()
         makeConstraint()
         set()
-        
-        
+        setNavigationBar()
     }
     
     private func set() {
@@ -153,17 +152,16 @@ class RouteDetailsViewController: UIViewController {
         view.distribution = .fill
         let image = UIImageView()
         view.addArrangedSubview(image)
-        image.image = UIImage(systemName: "gear")
+        image.image = UIImage(named: "mapPoint")
         image.contentMode = .scaleAspectFit
         
         
         image.snp.makeConstraints { make in
-            make.height.width.equalTo(10)
+            make.height.width.equalTo(30)
         }
         
         view.snp.makeConstraints { make in
-            make.height.equalTo(20)
-            make.width.equalTo(20)
+            make.height.width.equalTo(40)
             
         }
         
@@ -183,4 +181,44 @@ class RouteDetailsViewController: UIViewController {
     private func moveCamera(to: CLLocationCoordinate2D) {
         map.camera = GMSCameraPosition(target: to, zoom: 10)
     }
+    
+    private func setNavigationBar() {
+        
+        self.navigationItem.setHidesBackButton(true, animated:false)
+        let view = UIView()
+        let backButton = UIButton()
+        backButton.setImage(UIImage(named: "back"), for: .normal)
+        let favoriteButton = UIButton()
+        favoriteButton.setImage(UIImage(named: "favorite"), for: .normal)
+
+        view.addSubview(backButton)
+        view.addSubview(favoriteButton)
+        
+        view.snp.makeConstraints { make in
+            make.height.equalTo(45)
+            make.width.equalTo(self.view.frame.width)
+        }
+        
+        backButton.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leading)
+            make.height.width.equalTo(35)
+        }
+        
+        favoriteButton.snp.makeConstraints { make in
+            make.trailing.equalTo(view.snp.trailing)
+            make.height.width.equalTo(35)
+        }
+
+
+        let backTap = UITapGestureRecognizer(target: self, action: #selector(backToMain))
+        backButton.addGestureRecognizer(backTap)
+
+        let leftBarButtonItem = UIBarButtonItem(customView: view)
+        self.navigationItem.leftBarButtonItem = leftBarButtonItem
+    }
+
+    @objc func backToMain() {
+        self.navigationController?.popViewController(animated: true)
+    }
 }
+
