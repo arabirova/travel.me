@@ -17,7 +17,6 @@
 		1F94AD892AC0859900D747A9 /* RouteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD882AC0859900D747A9 /* RouteCell.swift */; };
 		1F94AD8C2AC08F5000D747A9 /* RouteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD8B2AC08F5000D747A9 /* RouteModel.swift */; };
 		1F94AD8E2AC1FA8D00D747A9 /* RouteDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD8D2AC1FA8D00D747A9 /* RouteDetailsViewController.swift */; };
-		1FCEE5E72B0BD2B800A3965C /* CordinatesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCEE5E62B0BD2B800A3965C /* CordinatesModel.swift */; };
 		1FEF4BEF2AE3F16900DD9E90 /* GuideModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF4BEE2AE3F16900DD9E90 /* GuideModel.swift */; };
 		1FEF4BF12AE3F1C200DD9E90 /* GuideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF4BF02AE3F1C200DD9E90 /* GuideCell.swift */; };
 		1FEF4BF32AE3FA9100DD9E90 /* GuideDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF4BF22AE3FA9100DD9E90 /* GuideDetailsViewController.swift */; };
@@ -41,7 +40,6 @@
 		1F94AD882AC0859900D747A9 /* RouteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteCell.swift; sourceTree = "<group>"; };
 		1F94AD8B2AC08F5000D747A9 /* RouteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteModel.swift; sourceTree = "<group>"; };
 		1F94AD8D2AC1FA8D00D747A9 /* RouteDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDetailsViewController.swift; sourceTree = "<group>"; };
-		1FCEE5E62B0BD2B800A3965C /* CordinatesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CordinatesModel.swift; sourceTree = "<group>"; };
 		1FEF4BEE2AE3F16900DD9E90 /* GuideModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideModel.swift; sourceTree = "<group>"; };
 		1FEF4BF02AE3F1C200DD9E90 /* GuideCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideCell.swift; sourceTree = "<group>"; };
 		1FEF4BF22AE3FA9100DD9E90 /* GuideDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideDetailsViewController.swift; sourceTree = "<group>"; };
@@ -96,7 +94,6 @@
 				1F94AD8B2AC08F5000D747A9 /* RouteModel.swift */,
 				1FEF4BEE2AE3F16900DD9E90 /* GuideModel.swift */,
 				1FEF4BF42AE4060500DD9E90 /* MapModel.swift */,
-				1FCEE5E62B0BD2B800A3965C /* CordinatesModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -300,7 +297,6 @@
 				1F94AD762AC05FB700D747A9 /* RoutesViewController.swift in Sources */,
 				1F94AD8E2AC1FA8D00D747A9 /* RouteDetailsViewController.swift in Sources */,
 				1FEF4BF12AE3F1C200DD9E90 /* GuideCell.swift in Sources */,
-				1FCEE5E72B0BD2B800A3965C /* CordinatesModel.swift in Sources */,
 				1FEF4BEF2AE3F16900DD9E90 /* GuideModel.swift in Sources */,
 				1F94AD782AC05FC100D747A9 /* GuidesViewController.swift in Sources */,
 			);
