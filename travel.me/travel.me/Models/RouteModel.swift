@@ -14,6 +14,8 @@ class RouteModel {
     var detailDescription: String
     var lat: String
     var long: String
+    var routeOneTitle: String
+
     
     var asDict: [String: Any] {
         var dict = [String: Any]()
@@ -23,6 +25,7 @@ class RouteModel {
         dict["detailDescription"] = detailDescription
         dict["lat"] = lat
         dict["long"] = long
+        dict["routeOneTitle"] = routeOneTitle
         return dict
     }
     
@@ -32,7 +35,9 @@ class RouteModel {
               let description = dict["description"] as? String,
               let detailDescription = dict["detailDescription"] as? String,
               let lat = dict["lat"] as? String,
-              let long = dict["long"] as? String
+              let long = dict["long"] as? String,
+              let routeOneTitle = dict["routeOneTitle"] as? String
+              
         else {
             let error = "Parsing contact error"
             print("[Contact parser] \(error)")
@@ -45,6 +50,7 @@ class RouteModel {
         self.detailDescription = detailDescription
         self.lat = lat
         self.long = long
+        self.routeOneTitle = routeOneTitle
     }
 }
 
