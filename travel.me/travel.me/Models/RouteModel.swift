@@ -14,7 +14,10 @@ class RouteModel {
     var detailDescription: String
     var lat: String
     var long: String
-    var routeOneTitle: String
+    var oneCityName: String
+    var oneCoordinatesCity: String
+    var oneImageCityURL: String
+    var oneDescrCity: String
 
     
     var asDict: [String: Any] {
@@ -25,7 +28,10 @@ class RouteModel {
         dict["detailDescription"] = detailDescription
         dict["lat"] = lat
         dict["long"] = long
-        dict["routeOneTitle"] = routeOneTitle
+        dict["oneCityName"] = oneCityName
+        dict["oneCoordinatesCity"] = oneCoordinatesCity
+        dict["oneImageCityURL"] = oneImageCityURL
+        dict["oneDescrCity"] = oneDescrCity
         return dict
     }
     
@@ -36,7 +42,10 @@ class RouteModel {
               let detailDescription = dict["detailDescription"] as? String,
               let lat = dict["lat"] as? String,
               let long = dict["long"] as? String,
-              let routeOneTitle = dict["routeOneTitle"] as? String
+              let oneCityName = dict["oneCityName"] as? String,
+              let oneCoordinatesCity = dict["oneCoordinatesCity"] as? String,
+              let oneImageCityURL = dict["oneImageCityURL"] as? String,
+              let oneDescrCity = dict["oneDescrCity"] as? String
               
         else {
             let error = "Parsing contact error"
@@ -50,7 +59,10 @@ class RouteModel {
         self.detailDescription = detailDescription
         self.lat = lat
         self.long = long
-        self.routeOneTitle = routeOneTitle
+        self.oneCityName = oneCityName
+        self.oneCoordinatesCity = oneCoordinatesCity
+        self.oneImageCityURL = oneImageCityURL
+        self.oneDescrCity = oneDescrCity
     }
 }
 

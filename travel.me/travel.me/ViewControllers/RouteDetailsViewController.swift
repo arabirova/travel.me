@@ -67,6 +67,35 @@ class RouteDetailsViewController: UIViewController {
         return map
     }()
     
+    private lazy var oneCityNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 16)
+        label.numberOfLines = 3
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var oneCoordinatesCityLabel: UILabel = {
+        let label = UILabel()
+        label.font = .italicSystemFont(ofSize: 10)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var oneDescrCityLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12)
+        label.textAlignment = .center
+        label.numberOfLines = 100
+        return label
+    }()
+    
+    private lazy var oneImageCity: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "travel")
+        return image
+    }()
+    
     private func makeUI() {
         self.view.addSubview(scrollView)
         self.scrollView.addSubview(contentView)
@@ -75,17 +104,21 @@ class RouteDetailsViewController: UIViewController {
         self.contentView.addSubview(nameLabel)
         self.contentView.addSubview(descriptionLabel)
         self.contentView.addSubview(map)
+        self.contentView.addSubview(oneCityNameLabel)
+        self.contentView.addSubview(oneCoordinatesCityLabel)
+        self.contentView.addSubview(oneDescrCityLabel)
+        self.contentView.addSubview(oneImageCity)
     }
     
     private func makeConstraint() {
         
         scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.edges.equalTo(self.view)
             }
 
         contentView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-            make.width.height.equalToSuperview()
+            make.leading.trailing.equalTo(self.view)
+            make.width.height.top.bottom.equalTo(self.scrollView)
             }
         
         image.snp.makeConstraints { make in
@@ -118,6 +151,32 @@ class RouteDetailsViewController: UIViewController {
             make.height.width.equalTo(343)
             
         }
+        
+        oneCityNameLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.top.equalTo(map.snp.bottom).offset(10)
+        }
+        
+        oneCoordinatesCityLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.top.equalTo(oneCityNameLabel.snp.bottom).offset(5)
+            make.height.equalTo(22)
+        }
+        
+        oneDescrCityLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.top.equalTo(oneCoordinatesCityLabel.snp.bottom).offset(5)
+        }
+        
+        oneImageCity.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.top.equalTo(oneDescrCityLabel.snp.bottom).offset(5)
+            make.height.width.equalTo(200)
+        }
     }
     
     override func viewDidLoad() {
@@ -133,15 +192,22 @@ class RouteDetailsViewController: UIViewController {
     private func set() {
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             guard let url = URL(string: self?.route.imageURL ?? ""),
+                  let urlOneCity = URL(string: self?.route.oneImageCityURL ?? ""),
                   let data = try? Data(contentsOf: url),
-                  let image = UIImage(data: data)
+                  let dataOneCity = try? Data(contentsOf: urlOneCity),
+                  let image = UIImage(data: data),
+                  let imageOneCity = UIImage(data: dataOneCity)
             else { return }
             DispatchQueue.main.async { [weak self] in
                 self?.image.image = image
+                self?.oneImageCity.image = imageOneCity
             }
         }
         nameLabel.text = route.name
         descriptionLabel.text = route.detailDescription
+        oneCityNameLabel.text = route.oneCityName
+        oneCoordinatesCityLabel.text = route.oneCoordinatesCity
+        oneDescrCityLabel.text = route.oneDescrCity
     }
     
     private func createMarker(coordinate:CLLocationCoordinate2D) {
