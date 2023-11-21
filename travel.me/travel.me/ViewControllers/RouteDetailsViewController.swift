@@ -26,11 +26,18 @@ class RouteDetailsViewController: UIViewController {
     
     private lazy var scrollView: UIScrollView = {
         let scroll = UIScrollView()
+        scroll.frame = view.bounds
+        scroll.contentSize = contentSize
         return scroll
     }()
     
+    private var contentSize: CGSize{
+        CGSize(width: view.frame.width, height: view.frame.height + 1000)
+    }
+    
     private lazy var contentView: UIView = {
         let view = UIView()
+        view.frame.size = contentSize
         return view
     }()
     
@@ -108,72 +115,65 @@ class RouteDetailsViewController: UIViewController {
         self.contentView.addSubview(oneCoordinatesCityLabel)
         self.contentView.addSubview(oneDescrCityLabel)
         self.contentView.addSubview(oneImageCity)
+        scrollView.contentInsetAdjustmentBehavior = .never
     }
     
     private func makeConstraint() {
         
-        scrollView.snp.makeConstraints { make in
-            make.edges.equalTo(self.view)
-            }
-
-        contentView.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(self.view)
-            make.width.height.top.bottom.equalTo(self.scrollView)
-            }
         
         image.snp.makeConstraints { make in
-            make.top.equalToSuperview()
+            make.top.equalTo(self.contentView)
             make.bottom.equalTo(descriptionLabel.snp.top).inset(-10)
             make.height.equalTo(250)
-            make.width.equalToSuperview()
+            make.width.equalTo(self.contentView)
         }
         
         imageShadow.snp.makeConstraints { make in
             make.bottom.equalTo(image.snp.bottom)
-            make.width.equalToSuperview()
+            make.width.equalTo(self.contentView)
             make.height.equalTo(150)
         }
         
         nameLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
+            make.leading.trailing.equalTo(self.contentView)
             make.bottom.equalTo(image.snp.bottom).offset(-10)
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-16)
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
             make.bottom.equalTo(map.snp.top).inset(-10)
         }
         
         map.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-16)
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
             make.height.width.equalTo(343)
             
         }
         
         oneCityNameLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-16)
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
             make.top.equalTo(map.snp.bottom).offset(10)
         }
         
         oneCoordinatesCityLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-16)
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
             make.top.equalTo(oneCityNameLabel.snp.bottom).offset(5)
             make.height.equalTo(22)
         }
         
         oneDescrCityLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-16)
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
             make.top.equalTo(oneCoordinatesCityLabel.snp.bottom).offset(5)
         }
         
         oneImageCity.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-16)
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
             make.top.equalTo(oneDescrCityLabel.snp.bottom).offset(5)
             make.height.width.equalTo(200)
         }
@@ -182,6 +182,7 @@ class RouteDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        self.tabBarController?.tabBar.isHidden = true
         getCoordinate()
         makeUI()
         makeConstraint()
@@ -284,6 +285,7 @@ class RouteDetailsViewController: UIViewController {
     }
 
     @objc func backToMain() {
+        self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.popViewController(animated: true)
     }
 }
