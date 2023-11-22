@@ -32,7 +32,7 @@ class RouteDetailsViewController: UIViewController {
     }()
     
     private var contentSize: CGSize{
-        CGSize(width: view.frame.width, height: view.frame.height + 4200)
+        CGSize(width: view.frame.width, height: view.frame.height + 4000)
     }
     
     private lazy var contentView: UIView = {
@@ -99,6 +99,8 @@ class RouteDetailsViewController: UIViewController {
     private lazy var oneImageCity: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "travel")
+        image.layer.cornerRadius = 15
+        image.clipsToBounds = true
         return image
     }()
     
@@ -127,6 +129,8 @@ class RouteDetailsViewController: UIViewController {
     private lazy var twoImageCity: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "travel")
+        image.layer.cornerRadius = 15
+        image.clipsToBounds = true
         return image
     }()
     
@@ -155,6 +159,8 @@ class RouteDetailsViewController: UIViewController {
     private lazy var threeImageCity: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "travel")
+        image.layer.cornerRadius = 15
+        image.clipsToBounds = true
         return image
     }()
     
@@ -183,6 +189,8 @@ class RouteDetailsViewController: UIViewController {
     private lazy var fourImageCity: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "travel")
+        image.layer.cornerRadius = 15
+        image.clipsToBounds = true
         return image
     }()
     
@@ -210,7 +218,8 @@ class RouteDetailsViewController: UIViewController {
     
     private lazy var fiveImageCity: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "travel")
+        image.layer.cornerRadius = 15
+        image.clipsToBounds = true
         return image
     }()
     
