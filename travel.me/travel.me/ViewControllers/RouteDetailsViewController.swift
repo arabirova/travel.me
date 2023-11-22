@@ -32,7 +32,7 @@ class RouteDetailsViewController: UIViewController {
     }()
     
     private var contentSize: CGSize{
-        CGSize(width: view.frame.width, height: view.frame.height + 1000)
+        CGSize(width: view.frame.width, height: view.frame.height + 4200)
     }
     
     private lazy var contentView: UIView = {
@@ -92,12 +92,123 @@ class RouteDetailsViewController: UIViewController {
     private lazy var oneDescrCityLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 12)
-        label.textAlignment = .center
         label.numberOfLines = 100
         return label
     }()
     
     private lazy var oneImageCity: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "travel")
+        return image
+    }()
+    
+    private lazy var twoCityNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 16)
+        label.numberOfLines = 3
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var twoCoordinatesCityLabel: UILabel = {
+        let label = UILabel()
+        label.font = .italicSystemFont(ofSize: 10)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var twoDescrCityLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12)
+        label.numberOfLines = 100
+        return label
+    }()
+    
+    private lazy var twoImageCity: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "travel")
+        return image
+    }()
+    
+    private lazy var threeCityNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 16)
+        label.numberOfLines = 3
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var threeCoordinatesCityLabel: UILabel = {
+        let label = UILabel()
+        label.font = .italicSystemFont(ofSize: 10)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var threeDescrCityLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12)
+        label.numberOfLines = 100
+        return label
+    }()
+    
+    private lazy var threeImageCity: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "travel")
+        return image
+    }()
+    
+    private lazy var fourCityNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 16)
+        label.numberOfLines = 3
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var fourCoordinatesCityLabel: UILabel = {
+        let label = UILabel()
+        label.font = .italicSystemFont(ofSize: 10)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var fourDescrCityLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12)
+        label.numberOfLines = 100
+        return label
+    }()
+    
+    private lazy var fourImageCity: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "travel")
+        return image
+    }()
+    
+    private lazy var fiveCityNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 16)
+        label.numberOfLines = 3
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var fiveCoordinatesCityLabel: UILabel = {
+        let label = UILabel()
+        label.font = .italicSystemFont(ofSize: 10)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var fiveDescrCityLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12)
+        label.numberOfLines = 100
+        return label
+    }()
+    
+    private lazy var fiveImageCity: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "travel")
         return image
@@ -111,10 +222,32 @@ class RouteDetailsViewController: UIViewController {
         self.contentView.addSubview(nameLabel)
         self.contentView.addSubview(descriptionLabel)
         self.contentView.addSubview(map)
+        
         self.contentView.addSubview(oneCityNameLabel)
         self.contentView.addSubview(oneCoordinatesCityLabel)
         self.contentView.addSubview(oneDescrCityLabel)
         self.contentView.addSubview(oneImageCity)
+        
+        self.contentView.addSubview(twoCityNameLabel)
+        self.contentView.addSubview(twoCoordinatesCityLabel)
+        self.contentView.addSubview(twoDescrCityLabel)
+        self.contentView.addSubview(twoImageCity)
+        
+        self.contentView.addSubview(threeCityNameLabel)
+        self.contentView.addSubview(threeCoordinatesCityLabel)
+        self.contentView.addSubview(threeDescrCityLabel)
+        self.contentView.addSubview(threeImageCity)
+        
+        self.contentView.addSubview(fourCityNameLabel)
+        self.contentView.addSubview(fourCoordinatesCityLabel)
+        self.contentView.addSubview(fourDescrCityLabel)
+        self.contentView.addSubview(fourImageCity)
+        
+        self.contentView.addSubview(fiveCityNameLabel)
+        self.contentView.addSubview(fiveCoordinatesCityLabel)
+        self.contentView.addSubview(fiveDescrCityLabel)
+        self.contentView.addSubview(fiveImageCity)
+        
         scrollView.contentInsetAdjustmentBehavior = .never
     }
     
@@ -175,7 +308,116 @@ class RouteDetailsViewController: UIViewController {
             make.leading.equalTo(self.contentView).offset(16)
             make.trailing.equalTo(self.contentView).offset(-16)
             make.top.equalTo(oneDescrCityLabel.snp.bottom).offset(5)
-            make.height.width.equalTo(200)
+            make.height.equalTo(237)
+            make.width.equalTo(343)
+        }
+        
+        twoCityNameLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
+            make.top.equalTo(oneImageCity.snp.bottom).offset(10)
+        }
+        
+        twoCoordinatesCityLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
+            make.top.equalTo(twoCityNameLabel.snp.bottom).offset(5)
+            make.height.equalTo(22)
+        }
+        
+        twoDescrCityLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
+            make.top.equalTo(twoCoordinatesCityLabel.snp.bottom).offset(5)
+        }
+        
+        twoImageCity.snp.makeConstraints { make in
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
+            make.top.equalTo(twoDescrCityLabel.snp.bottom).offset(5)
+            make.height.equalTo(237)
+            make.width.equalTo(343)
+        }
+        
+        threeCityNameLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
+            make.top.equalTo(twoImageCity.snp.bottom).offset(10)
+        }
+        
+        threeCoordinatesCityLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
+            make.top.equalTo(threeCityNameLabel.snp.bottom).offset(5)
+            make.height.equalTo(22)
+        }
+        
+        threeDescrCityLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
+            make.top.equalTo(threeCoordinatesCityLabel.snp.bottom).offset(5)
+        }
+        
+        threeImageCity.snp.makeConstraints { make in
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
+            make.top.equalTo(threeDescrCityLabel.snp.bottom).offset(5)
+            make.height.equalTo(237)
+            make.width.equalTo(343)
+        }
+        
+        fourCityNameLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
+            make.top.equalTo(threeImageCity.snp.bottom).offset(10)
+        }
+        
+        fourCoordinatesCityLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
+            make.top.equalTo(fourCityNameLabel.snp.bottom).offset(5)
+            make.height.equalTo(22)
+        }
+        
+        fourDescrCityLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
+            make.top.equalTo(fourCoordinatesCityLabel.snp.bottom).offset(5)
+        }
+        
+        fourImageCity.snp.makeConstraints { make in
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
+            make.top.equalTo(fourDescrCityLabel.snp.bottom).offset(5)
+            make.height.equalTo(237)
+            make.width.equalTo(343)
+        }
+        
+        fiveCityNameLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
+            make.top.equalTo(fourImageCity.snp.bottom).offset(10)
+        }
+        
+        fiveCoordinatesCityLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
+            make.top.equalTo(fiveCityNameLabel.snp.bottom).offset(5)
+            make.height.equalTo(22)
+        }
+        
+        fiveDescrCityLabel.snp.makeConstraints { make in
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
+            make.top.equalTo(fiveCoordinatesCityLabel.snp.bottom).offset(5)
+        }
+        
+        fiveImageCity.snp.makeConstraints { make in
+            make.leading.equalTo(self.contentView).offset(16)
+            make.trailing.equalTo(self.contentView).offset(-16)
+            make.top.equalTo(fiveDescrCityLabel.snp.bottom).offset(5)
+            make.height.equalTo(237)
+            make.width.equalTo(343)
         }
     }
     
@@ -193,22 +435,62 @@ class RouteDetailsViewController: UIViewController {
     private func set() {
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             guard let url = URL(string: self?.route.imageURL ?? ""),
+                  
                   let urlOneCity = URL(string: self?.route.oneImageCityURL ?? ""),
+                  let urlTwoCity = URL(string: self?.route.twoImageCityURL ?? ""),
+                  let urlThreeCity = URL(string: self?.route.threeImageCityURL ?? ""),
+                  let urlFourCity = URL(string: self?.route.fourImageCityURL ?? ""),
+                  let urlFiveCity = URL(string: self?.route.fiveImageCityURL ?? ""),
+                    
                   let data = try? Data(contentsOf: url),
+                  
                   let dataOneCity = try? Data(contentsOf: urlOneCity),
+                  let dataTwoCity = try? Data(contentsOf: urlTwoCity),
+                  let dataThreeCity = try? Data(contentsOf: urlThreeCity),
+                  let dataFourCity = try? Data(contentsOf: urlFourCity),
+                  let dataFiveCity = try? Data(contentsOf: urlFiveCity),
+                  
+                    
                   let image = UIImage(data: data),
-                  let imageOneCity = UIImage(data: dataOneCity)
+                  
+                  let imageOneCity = UIImage(data: dataOneCity),
+                  let imageTwoCity = UIImage(data: dataTwoCity),
+                  let imageThreeCity = UIImage(data: dataThreeCity),
+                  let imageFourCity = UIImage(data: dataFourCity),
+                  let imageFiveCity = UIImage(data: dataFiveCity)
+                    
             else { return }
             DispatchQueue.main.async { [weak self] in
                 self?.image.image = image
                 self?.oneImageCity.image = imageOneCity
+                self?.twoImageCity.image = imageTwoCity
+                self?.threeImageCity.image = imageThreeCity
+                self?.fourImageCity.image = imageFourCity
+                self?.fiveImageCity.image = imageFiveCity
             }
         }
         nameLabel.text = route.name
         descriptionLabel.text = route.detailDescription
+        
         oneCityNameLabel.text = route.oneCityName
         oneCoordinatesCityLabel.text = route.oneCoordinatesCity
         oneDescrCityLabel.text = route.oneDescrCity
+        
+        twoCityNameLabel.text = route.twoCityName
+        twoCoordinatesCityLabel.text = route.twoCoordinatesCity
+        twoDescrCityLabel.text = route.twoDescrCity
+        
+        threeCityNameLabel.text = route.threeCityName
+        threeCoordinatesCityLabel.text = route.threeCoordinatesCity
+        threeDescrCityLabel.text = route.threeDescrCity
+        
+        fourCityNameLabel.text = route.fourCityName
+        fourCoordinatesCityLabel.text = route.fourCoordinatesCity
+        fourDescrCityLabel.text = route.fourDescrCity
+        
+        fiveCityNameLabel.text = route.fiveCityName
+        fiveCoordinatesCityLabel.text = route.fiveCoordinatesCity
+        fiveDescrCityLabel.text = route.fiveDescrCity
     }
     
     private func createMarker(coordinate:CLLocationCoordinate2D) {
