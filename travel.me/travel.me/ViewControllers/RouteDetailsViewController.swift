@@ -218,6 +218,7 @@ class RouteDetailsViewController: UIViewController {
     
     private lazy var fiveImageCity: UIImageView = {
         let image = UIImageView()
+        image.image = UIImage(named: "travel")
         image.layer.cornerRadius = 15
         image.clipsToBounds = true
         return image

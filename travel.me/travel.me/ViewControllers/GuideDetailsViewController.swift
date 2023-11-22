@@ -26,11 +26,18 @@ class GuideDetailsViewController: UIViewController {
     
     private lazy var scrollView: UIScrollView = {
         let scroll = UIScrollView()
+        scroll.frame = view.bounds
+        scroll.contentSize = contentSize
         return scroll
     }()
     
+    private var contentSize: CGSize{
+        CGSize(width: view.frame.width, height: view.frame.height + 4000)
+    }
+    
     private lazy var contentView: UIView = {
         let view = UIView()
+        view.frame.size = contentSize
         return view
     }()
     
@@ -62,9 +69,30 @@ class GuideDetailsViewController: UIViewController {
         return label
     }()
     
+    private var segment: UISegmentedControl = {
+        let items = ["Транспорт", "Жилье", "Культура", "Еда"]
+        let segment = UISegmentedControl(items: items)
+        segment.selectedSegmentIndex = 0
+        segment.addTarget(self, action: #selector(segmentAction(sender:)), for: .valueChanged)
+        return segment
+    }()
+    
     private lazy var map: GMSMapView = {
         let map = GMSMapView()
         return map
+    }()
+    
+    private lazy var aboutSegmentLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1000
+        label.font = .systemFont(ofSize: 12)
+        return label
+    }()
+    
+    private lazy var aboutSegmentImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "travel")
+        return image
     }()
     
     private func makeUI() {
@@ -74,18 +102,15 @@ class GuideDetailsViewController: UIViewController {
         self.contentView.addSubview(imageShadow)
         self.contentView.addSubview(nameLabel)
         self.contentView.addSubview(descriptionLabel)
+        self.contentView.addSubview(segment)
         self.contentView.addSubview(map)
+        self.contentView.addSubview(aboutSegmentLabel)
+        self.contentView.addSubview(aboutSegmentImage)
+        
+        scrollView.contentInsetAdjustmentBehavior = .never
     }
     
     private func makeConstraint() {
-        scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-            }
-
-        contentView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-            make.width.height.equalToSuperview()
-            }
         
         image.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -108,6 +133,12 @@ class GuideDetailsViewController: UIViewController {
         descriptionLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
+            make.bottom.equalTo(segment.snp.top).inset(-10)
+        }
+        
+        segment.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
             make.bottom.equalTo(map.snp.top).inset(-10)
         }
         
@@ -115,7 +146,21 @@ class GuideDetailsViewController: UIViewController {
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
             make.height.width.equalTo(343)
+            make.bottom.equalTo(aboutSegmentLabel.snp.top).inset(-10)
             
+        }
+        
+        aboutSegmentLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.bottom.equalTo(aboutSegmentImage.snp.top).inset(-10)
+        }
+        
+        aboutSegmentImage.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.height.equalTo(237)
+            make.width.equalTo(343)
         }
     }
     
@@ -126,8 +171,6 @@ class GuideDetailsViewController: UIViewController {
         makeUI()
         makeConstraint()
         set()
-        
-        
     }
     
     private func set() {
@@ -181,6 +224,55 @@ class GuideDetailsViewController: UIViewController {
     
     private func moveCamera(to: CLLocationCoordinate2D) {
         map.camera = GMSCameraPosition(target: to, zoom: 10)
+    }
+    
+    @objc func segmentAction(sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            aboutSegmentLabel.text = guide.transport
+            DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+                guard let urlTransport = URL(string: self?.guide.transportImageURL ?? ""),
+                      let dataTransport = try? Data(contentsOf: urlTransport),
+                      let imageTransport = UIImage(data: dataTransport)
+                else { return }
+                DispatchQueue.main.async { [weak self] in
+                    self?.aboutSegmentImage.image = imageTransport
+                }
+            }
+        case 1:
+            aboutSegmentLabel.text = guide.housing
+            DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+                guard let urlHousing = URL(string: self?.guide.housingImageURL ?? ""),
+                      let dataHousing = try? Data(contentsOf: urlHousing),
+                      let imageHousing = UIImage(data: dataHousing)
+                else { return }
+                DispatchQueue.main.async { [weak self] in
+                    self?.aboutSegmentImage.image = imageHousing
+                }
+            }
+        case 2:
+            aboutSegmentLabel.text = guide.culture
+            DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+                      guard let urlCulture = URL(string: self?.guide.cultureImageURL ?? ""),
+                      let dataCulture = try? Data(contentsOf: urlCulture),
+                      let imageCulture = UIImage(data: dataCulture)
+                else { return }
+                DispatchQueue.main.async { [weak self] in
+                    self?.aboutSegmentImage.image = imageCulture
+                }
+            }
+        default:
+            aboutSegmentLabel.text = guide.food
+            DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+                guard let urlFood = URL(string: self?.guide.foodImageURL ?? ""),
+                      let dataTFood = try? Data(contentsOf: urlFood),
+                      let imageFood = UIImage(data: dataTFood)
+                else { return }
+                DispatchQueue.main.async { [weak self] in
+                    self?.aboutSegmentImage.image = imageFood
+                }
+            }
+        }
     }
 }
 
