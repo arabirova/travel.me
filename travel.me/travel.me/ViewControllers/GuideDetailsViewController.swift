@@ -12,8 +12,6 @@ import GoogleMaps
 class GuideDetailsViewController: UIViewController {
     
     private var guide: GuideModel
-    var markers: [GMSMarker] = []
-    var coordinates: [CLLocationCoordinate2D] = []
     
     init(guide: GuideModel) {
         self.guide = guide
@@ -77,9 +75,12 @@ class GuideDetailsViewController: UIViewController {
         return segment
     }()
     
-    private lazy var map: GMSMapView = {
-        let map = GMSMapView()
-        return map
+    private lazy var aboutSegmentImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "travel")
+        image.layer.cornerRadius = 15
+        image.clipsToBounds = true
+        return image
     }()
     
     private lazy var aboutSegmentLabel: UILabel = {
@@ -87,12 +88,6 @@ class GuideDetailsViewController: UIViewController {
         label.numberOfLines = 1000
         label.font = .systemFont(ofSize: 12)
         return label
-    }()
-    
-    private lazy var aboutSegmentImage: UIImageView = {
-        let image = UIImageView()
-        image.image = UIImage(named: "travel")
-        return image
     }()
     
     private func makeUI() {
@@ -103,9 +98,8 @@ class GuideDetailsViewController: UIViewController {
         self.contentView.addSubview(nameLabel)
         self.contentView.addSubview(descriptionLabel)
         self.contentView.addSubview(segment)
-        self.contentView.addSubview(map)
-        self.contentView.addSubview(aboutSegmentLabel)
         self.contentView.addSubview(aboutSegmentImage)
+        self.contentView.addSubview(aboutSegmentLabel)
         
         scrollView.contentInsetAdjustmentBehavior = .never
     }
@@ -139,20 +133,6 @@ class GuideDetailsViewController: UIViewController {
         segment.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
-            make.bottom.equalTo(map.snp.top).inset(-10)
-        }
-        
-        map.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-16)
-            make.height.width.equalTo(343)
-            make.bottom.equalTo(aboutSegmentLabel.snp.top).inset(-10)
-            
-        }
-        
-        aboutSegmentLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-16)
             make.bottom.equalTo(aboutSegmentImage.snp.top).inset(-10)
         }
         
@@ -161,69 +141,42 @@ class GuideDetailsViewController: UIViewController {
             make.trailing.equalToSuperview().offset(-16)
             make.height.equalTo(237)
             make.width.equalTo(343)
+            make.bottom.equalTo(aboutSegmentLabel.snp.top).inset(-10)
+        }
+        
+        aboutSegmentLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tabBarController?.tabBar.isHidden = true
         view.backgroundColor = .white
-        getCoordinate()
         makeUI()
         makeConstraint()
         set()
+        setNavigationBar()
     }
     
     private func set() {
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             guard let url = URL(string: self?.guide.imageURL ?? ""),
                   let data = try? Data(contentsOf: url),
-                  let image = UIImage(data: data)
+                  let image = UIImage(data: data),
+                  let urlTransport = URL(string: self?.guide.transportImageURL ?? ""),
+                  let dataTransport = try? Data(contentsOf: urlTransport),
+                  let imageTransport = UIImage(data: dataTransport)
             else { return }
             DispatchQueue.main.async { [weak self] in
                 self?.image.image = image
+                self?.aboutSegmentImage.image = imageTransport
             }
         }
         nameLabel.text = guide.name
         descriptionLabel.text = guide.detailDescription
-    }
-    
-    private func createMarker(coordinate:CLLocationCoordinate2D) {
-        let marker = GMSMarker(position: coordinate)
-        let view = UIStackView()
-        view.axis = .horizontal
-        view.spacing = 0
-        view.distribution = .fill
-        let image = UIImageView()
-        view.addArrangedSubview(image)
-        image.image = UIImage(systemName: "gear")
-        image.contentMode = .scaleAspectFit
-        
-        
-        image.snp.makeConstraints { make in
-            make.height.width.equalTo(10)
-        }
-        
-        view.snp.makeConstraints { make in
-            make.height.equalTo(20)
-            make.width.equalTo(20)
-            
-        }
-        
-        marker.iconView = view
-        marker.map = map
-        markers.append(marker)
-    }
-
-    private func getCoordinate() {
-        guard let lat = Double(guide.lat),
-              let long = Double(guide.long) else { return }
-        let coord = CLLocationCoordinate2D(latitude: lat, longitude: long)
-        self.createMarker(coordinate: coord)
-        self.moveCamera(to: coord)
-    }
-    
-    private func moveCamera(to: CLLocationCoordinate2D) {
-        map.camera = GMSCameraPosition(target: to, zoom: 10)
+        aboutSegmentLabel.text = guide.transport
     }
     
     @objc func segmentAction(sender: UISegmentedControl) {
@@ -273,6 +226,46 @@ class GuideDetailsViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    private func setNavigationBar() {
+        
+        self.navigationItem.setHidesBackButton(true, animated:false)
+        let view = UIView()
+        let backButton = UIButton()
+        backButton.setImage(UIImage(named: "back"), for: .normal)
+        let favoriteButton = UIButton()
+        favoriteButton.setImage(UIImage(named: "favorite"), for: .normal)
+
+        view.addSubview(backButton)
+        view.addSubview(favoriteButton)
+        
+        view.snp.makeConstraints { make in
+            make.height.equalTo(45)
+            make.width.equalTo(self.view.frame.width)
+        }
+        
+        backButton.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leading)
+            make.height.width.equalTo(35)
+        }
+        
+        favoriteButton.snp.makeConstraints { make in
+            make.trailing.equalTo(view.snp.trailing)
+            make.height.width.equalTo(35)
+        }
+
+
+        let backTap = UITapGestureRecognizer(target: self, action: #selector(backToMain))
+        backButton.addGestureRecognizer(backTap)
+
+        let leftBarButtonItem = UIBarButtonItem(customView: view)
+        self.navigationItem.leftBarButtonItem = leftBarButtonItem
+    }
+
+    @objc func backToMain() {
+        self.tabBarController?.tabBar.isHidden = false
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
