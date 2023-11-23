@@ -95,67 +95,35 @@ class MapViewController: UIViewController {
             let name = point.name
             let imageURL = point.imageURL
             let description = point.description
-            let dict = ["name": name, "imageURL": imageURL, "description": description]
+            let coordinates = point.coordinates
+            let openURL = point.openURL
+            let dict = ["name": name, "imageURL": imageURL, "description": description, "coordinates": coordinates, "openURL": openURL]
             self.createMarker(coordinate: coord, dict: dict)
         }
     }
     
     private func createMarker(coordinate:CLLocationCoordinate2D, dict: [String: Any]) {
         let marker = GMSMarker(position: coordinate)
-//        let view = UIStackView()
-//        view.axis = .horizontal
-//        view.spacing = 0
-//        view.distribution = .fill
-//        let image = UIImageView()
-//        view.addArrangedSubview(image)
-//        image.image = UIImage(named: "mapPoint")
-//        image.contentMode = .scaleAspectFill
-        
-        
-//        image.snp.makeConstraints { make in
-//            make.height.width.equalTo(35)
-//        }
-//        
-//        view.snp.makeConstraints { make in
-//            make.height.width.equalTo(35)
-//        }
-//        
-//        marker.iconView = view
-        marker.icon = UIImage(named: "mapPoint")
-        //marker.userData = dict
-        marker.map = map
-    }
-    
-    private func createDetailMarker(coordinate:CLLocationCoordinate2D, image: UIImageView, name: String) {
-        let marker = GMSMarker(position: coordinate)
         let view = UIStackView()
-        view.axis = .vertical
+        view.axis = .horizontal
         view.spacing = 0
         view.distribution = .fill
-        let nameLabel = UILabel()
-        nameLabel.text = name
-        nameLabel.textAlignment = .center
-        let imageMarker = image
-        view.addArrangedSubview(imageMarker)
-        view.addArrangedSubview(nameLabel)
-        imageMarker.contentMode = .scaleAspectFill
+        let image = UIImageView()
+        view.addArrangedSubview(image)
+        image.image = UIImage(named: "mapPoint")
+        image.contentMode = .scaleAspectFill
         
-        
-        imageMarker.snp.makeConstraints { make in
-            make.height.width.equalTo(55)
-        }
-        
-        nameLabel.snp.makeConstraints { make in
-            make.height.width.equalTo(21)
+        image.snp.makeConstraints { make in
+            make.height.width.equalTo(35)
         }
         
         view.snp.makeConstraints { make in
-            make.height.equalTo(100)
-            make.width.equalTo(100)
-            
+            make.height.width.equalTo(35)
         }
         
         marker.iconView = view
+        marker.icon = UIImage(named: "mapPoint")
+        marker.userData = dict
         marker.map = map
     }
 }
@@ -168,19 +136,22 @@ extension MapViewController: GMSMapViewDelegate {
         }
         let name = data["name"] as? String ?? ""
         let imageURL = data["imageURL"] as? String ?? ""
-        let coordinate = marker.position
-        let imageView = UIImageView()
-//        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-//            guard let url = URL(string: imageURL),
-//                  let data = try? Data(contentsOf: url),
-//                  let image = UIImage(data: data)
-//            else { return }
-//            DispatchQueue.main.async { [weak self] in
-//                imageView.image = image
-//            }
-//        }
-        marker.map = nil
-        //createDetailMarker(coordinate: coordinate, image: imageView, name: name)
+        let detailDescription = data["description"] as? String ?? ""
+        let coordinates = data["coordinates"] as? String ?? ""
+        let openURL = data["openURL"] as? String ?? ""
+        
+        let createMarkerVC = MarkerViewController(name: name, detailDescription: detailDescription, imageURL: imageURL, coordinates: coordinates, openURL: openURL)
+        createMarkerVC.modalPresentationStyle = .overFullScreen
+        createMarkerVC.modalTransitionStyle = .crossDissolve
+        //self.present(createMarkerVC, animated: true)        //navigationController?.pushViewController(createToDoListVC, animated: true)
+        
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            
+            topController.present(createMarkerVC, animated: true)
+        }
         return true
     }
 }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1F3A4D522ADC8164008B4680 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3A4D512ADC8164008B4680 /* Environment.swift */; };
 		1F3A4D542ADD91A3008B4680 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F3A4D532ADD91A3008B4680 /* GoogleService-Info.plist */; };
+		1F839E5E2B0F75C5006FB12B /* MarkerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F839E5D2B0F75C5006FB12B /* MarkerViewController.swift */; };
 		1F94AD742AC05E1B00D747A9 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD732AC05E1B00D747A9 /* TabbarController.swift */; };
 		1F94AD762AC05FB700D747A9 /* RoutesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD752AC05FB700D747A9 /* RoutesViewController.swift */; };
 		1F94AD782AC05FC100D747A9 /* GuidesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94AD772AC05FC100D747A9 /* GuidesViewController.swift */; };
@@ -32,6 +33,7 @@
 		1BCEBEBDE8980AF0D4240D3B /* Pods-travel.me.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-travel.me.release.xcconfig"; path = "Target Support Files/Pods-travel.me/Pods-travel.me.release.xcconfig"; sourceTree = "<group>"; };
 		1F3A4D512ADC8164008B4680 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		1F3A4D532ADD91A3008B4680 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1F839E5D2B0F75C5006FB12B /* MarkerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerViewController.swift; sourceTree = "<group>"; };
 		1F94AD732AC05E1B00D747A9 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 		1F94AD752AC05FB700D747A9 /* RoutesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesViewController.swift; sourceTree = "<group>"; };
 		1F94AD772AC05FC100D747A9 /* GuidesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidesViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 				1F94AD772AC05FC100D747A9 /* GuidesViewController.swift */,
 				1FEF4BF22AE3FA9100DD9E90 /* GuideDetailsViewController.swift */,
 				1F94AD792AC0641D00D747A9 /* MapViewController.swift */,
+				1F839E5D2B0F75C5006FB12B /* MarkerViewController.swift */,
 				1F94AD7B2AC064A400D747A9 /* FavoritesViewController.swift */,
 			);
 			path = ViewControllers;
@@ -290,6 +293,7 @@
 				1F94AD8C2AC08F5000D747A9 /* RouteModel.swift in Sources */,
 				1F94AD7C2AC064A400D747A9 /* FavoritesViewController.swift in Sources */,
 				1FF32AEA2ABB77C2008EB819 /* AppDelegate.swift in Sources */,
+				1F839E5E2B0F75C5006FB12B /* MarkerViewController.swift in Sources */,
 				1F94AD892AC0859900D747A9 /* RouteCell.swift in Sources */,
 				1FEF4BF32AE3FA9100DD9E90 /* GuideDetailsViewController.swift in Sources */,
 				1FF32AEC2ABB77C2008EB819 /* SceneDelegate.swift in Sources */,
