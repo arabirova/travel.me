@@ -8,8 +8,6 @@
 import UIKit
 import SnapKit
 
-typealias VoidBlock = () -> Void
-
 class MarkerViewController: UIViewController {
     
     private var name: String
@@ -18,7 +16,7 @@ class MarkerViewController: UIViewController {
 
     private lazy var mainView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .black
         view.layer.cornerRadius = 12
         return view
     }()
@@ -33,7 +31,7 @@ class MarkerViewController: UIViewController {
     private lazy var contentStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = 10
+        stack.spacing = 4
         return stack
     }()
 
@@ -91,40 +89,41 @@ class MarkerViewController: UIViewController {
         makeLayout()
         makeConstraints()
         set()
+        makeGestures()
         
     }
     
     private func makeLayout() {
-        view.backgroundColor = .black.withAlphaComponent(0.2)
+        view.backgroundColor = .black.withAlphaComponent(0.5)
         view.addSubview(mainView)
         mainView.addSubview(cancelButton)
         mainView.addSubview(contentStack)
+        mainView.addSubview(image)
         contentStack.addArrangedSubview(nameLabel)
         contentStack.addArrangedSubview(coordinatesLabel)
         contentStack.addArrangedSubview(descriptionLabel)
-        mainView.addSubview(image)
+
 
     }
     
     private func makeConstraints() {
         mainView.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+            make.leading.trailing.equalToSuperview().inset(16)
         }
         
         cancelButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(16)
             make.height.width.equalTo(30)
-            make.top.equalToSuperview().inset(10)
         }
         
         contentStack.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+            make.leading.trailing.equalToSuperview().inset(16)
             make.top.equalTo(cancelButton.snp.bottom)
         }
         
         image.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+            make.leading.trailing.equalToSuperview().inset(16)
             make.top.equalTo(contentStack.snp.bottom)
             make.height.width.equalTo(250)
         }
@@ -144,8 +143,14 @@ class MarkerViewController: UIViewController {
         descriptionLabel.text = self.detailDescription
     }
     
+    private func makeGestures() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(close))
+        self.view.addGestureRecognizer(tap)
+    }
+    
     @objc private func close() {
         self.dismiss(animated: true)
         print("1")
     }
 }
+

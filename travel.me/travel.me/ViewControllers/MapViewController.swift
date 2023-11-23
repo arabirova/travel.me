@@ -135,8 +135,19 @@ extension MapViewController: GMSMapViewDelegate {
         let name = data["name"] as? String ?? ""
         let imageURL = data["imageURL"] as? String ?? ""
         let detailDescription = data["description"] as? String ?? ""
+        
         let createMarkerVC = MarkerViewController(name: name, detailDescription: detailDescription, imageURL: imageURL)
-        self.present(createMarkerVC, animated: true)        //navigationController?.pushViewController(createToDoListVC, animated: true)
+        createMarkerVC.modalPresentationStyle = .overFullScreen
+        createMarkerVC.modalTransitionStyle = .crossDissolve
+        //self.present(createMarkerVC, animated: true)        //navigationController?.pushViewController(createToDoListVC, animated: true)
+        
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            
+            topController.present(createMarkerVC, animated: true)
+        }
         return true
     }
 }
