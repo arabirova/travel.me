@@ -16,8 +16,8 @@ class MarkerViewController: UIViewController {
 
     private lazy var mainView: UIView = {
         let view = UIView()
-        view.backgroundColor = .black
-        view.layer.cornerRadius = 12
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 20
         return view
     }()
     
@@ -31,7 +31,7 @@ class MarkerViewController: UIViewController {
     private lazy var contentStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = 4
+        stack.spacing = 6
         return stack
     }()
 
@@ -86,9 +86,9 @@ class MarkerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        set()
         makeLayout()
         makeConstraints()
-        set()
         makeGestures()
         
     }
@@ -98,12 +98,10 @@ class MarkerViewController: UIViewController {
         view.addSubview(mainView)
         mainView.addSubview(cancelButton)
         mainView.addSubview(contentStack)
-        mainView.addSubview(image)
         contentStack.addArrangedSubview(nameLabel)
         contentStack.addArrangedSubview(coordinatesLabel)
         contentStack.addArrangedSubview(descriptionLabel)
-
-
+        mainView.addSubview(image)
     }
     
     private func makeConstraints() {
@@ -113,18 +111,20 @@ class MarkerViewController: UIViewController {
         }
         
         cancelButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(16)
+            make.trailing.equalToSuperview().inset(12)
+            make.top.equalToSuperview().inset(12)
+            make.bottom.equalTo(contentStack.snp.top)
             make.height.width.equalTo(30)
         }
         
         contentStack.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(16)
-            make.top.equalTo(cancelButton.snp.bottom)
+            make.bottom.equalTo(image.snp.top).inset(-6)
         }
         
         image.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(16)
-            make.top.equalTo(contentStack.snp.bottom)
+            make.bottom.equalToSuperview().inset(16)
             make.height.width.equalTo(250)
         }
     }
