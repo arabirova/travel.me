@@ -13,6 +13,10 @@ class MapModel {
     var description: String
     var lat: String
     var long: String
+    var coordinates: String
+    var openURL: String
+
+
     
     var asDict: [String: Any] {
         var dict = [String: Any]()
@@ -21,6 +25,8 @@ class MapModel {
         dict["description"] = description
         dict["lat"] = lat
         dict["long"] = long
+        dict["coordinates"] = coordinates
+        dict["openURL"] = openURL
         return dict
     }
     
@@ -29,7 +35,10 @@ class MapModel {
               let name = dict["name"] as? String,
               let description = dict["description"] as? String,
               let lat = dict["lat"] as? String,
-              let long = dict["long"] as? String
+              let long = dict["long"] as? String,
+              let coordinates = dict["coordinates"] as? String,
+              let openURL = dict["openURL"] as? String
+
         else {
             let error = "Parsing contact error"
             print("[Contact parser] \(error)")
@@ -41,6 +50,8 @@ class MapModel {
         self.description = description
         self.lat = lat
         self.long = long
+        self.coordinates = coordinates
+        self.openURL = openURL
     }
 }
 

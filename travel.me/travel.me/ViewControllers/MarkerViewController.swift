@@ -13,6 +13,8 @@ class MarkerViewController: UIViewController {
     private var name: String
     private var detailDescription: String
     private var imageURL: String
+    private var coordinates: String
+    private var openURL: String
 
     private lazy var mainView: UIView = {
         let view = UIView()
@@ -37,19 +39,16 @@ class MarkerViewController: UIViewController {
 
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Заголовок"
         label.textAlignment = .center
-        label.numberOfLines = 2 //сколько линий строк
+        label.numberOfLines = 2
         label.font = .boldSystemFont(ofSize: 18)
         return label
     }()
     
     private lazy var coordinatesLabel: UILabel = {
         let label = UILabel()
-        label.text = "Подзаголовок"
         label.textAlignment = .center
-        label.numberOfLines = 5
-        label.font = .systemFont(ofSize: 14)
+        label.font = .italicSystemFont(ofSize: 12)
         label.textColor = .lightGray
         return label
     }()
@@ -65,18 +64,28 @@ class MarkerViewController: UIViewController {
     
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "Описание"
         label.textAlignment = .center
-        label.numberOfLines = 5
-        label.font = .systemFont(ofSize: 14)
-        label.textColor = .lightGray
+        label.numberOfLines = 100
+        label.font = .systemFont(ofSize: 16)
+        label.textColor = .darkGray
         return label
     }()
     
-    init(name: String, detailDescription: String, imageURL: String) {
+    private lazy var openURLButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Почитать подробнее на сайте ->", for: .normal)
+        button.setTitleColor(.blue, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 12)
+        button.addTarget(self, action: #selector(openURLAction), for: .touchUpInside)
+        return button
+    }()
+    
+    init(name: String, detailDescription: String, imageURL: String, coordinates: String, openURL: String) {
         self.name = name
         self.detailDescription = detailDescription
         self.imageURL = imageURL
+        self.coordinates = coordinates
+        self.openURL = openURL
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -102,6 +111,7 @@ class MarkerViewController: UIViewController {
         contentStack.addArrangedSubview(coordinatesLabel)
         contentStack.addArrangedSubview(descriptionLabel)
         mainView.addSubview(image)
+        mainView.addSubview(openURLButton)
     }
     
     private func makeConstraints() {
@@ -124,8 +134,13 @@ class MarkerViewController: UIViewController {
         
         image.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(16)
-            make.bottom.equalToSuperview().inset(16)
+            make.bottom.equalTo(openURLButton.snp.top).inset(-6)
             make.height.width.equalTo(250)
+        }
+        
+        openURLButton.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview().inset(10)
         }
     }
     
@@ -140,6 +155,7 @@ class MarkerViewController: UIViewController {
             }
         }
         nameLabel.text = self.name
+        coordinatesLabel.text = self.coordinates
         descriptionLabel.text = self.detailDescription
     }
     
@@ -150,7 +166,11 @@ class MarkerViewController: UIViewController {
     
     @objc private func close() {
         self.dismiss(animated: true)
-        print("1")
+    }
+    
+    @objc private func openURLAction() {
+        guard let url = URL(string: "\(self.openURL)") else { return }
+        UIApplication.shared.open(url)
     }
 }
 

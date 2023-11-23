@@ -95,7 +95,9 @@ class MapViewController: UIViewController {
             let name = point.name
             let imageURL = point.imageURL
             let description = point.description
-            let dict = ["name": name, "imageURL": imageURL, "description": description]
+            let coordinates = point.coordinates
+            let openURL = point.openURL
+            let dict = ["name": name, "imageURL": imageURL, "description": description, "coordinates": coordinates, "openURL": openURL]
             self.createMarker(coordinate: coord, dict: dict)
         }
     }
@@ -135,8 +137,10 @@ extension MapViewController: GMSMapViewDelegate {
         let name = data["name"] as? String ?? ""
         let imageURL = data["imageURL"] as? String ?? ""
         let detailDescription = data["description"] as? String ?? ""
+        let coordinates = data["coordinates"] as? String ?? ""
+        let openURL = data["openURL"] as? String ?? ""
         
-        let createMarkerVC = MarkerViewController(name: name, detailDescription: detailDescription, imageURL: imageURL)
+        let createMarkerVC = MarkerViewController(name: name, detailDescription: detailDescription, imageURL: imageURL, coordinates: coordinates, openURL: openURL)
         createMarkerVC.modalPresentationStyle = .overFullScreen
         createMarkerVC.modalTransitionStyle = .crossDissolve
         //self.present(createMarkerVC, animated: true)        //navigationController?.pushViewController(createToDoListVC, animated: true)
