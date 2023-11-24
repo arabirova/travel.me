@@ -15,6 +15,7 @@ class RouteDetailsViewController: UIViewController {
     var markers: [GMSMarker] = []
     var coordinates: [CLLocationCoordinate2D] = []
     private var counter = 0
+    private var favCounter = 0
     
     init(route: RouteModel) {
         self.route = route
@@ -517,11 +518,7 @@ class RouteDetailsViewController: UIViewController {
         label.textAlignment = .center
         label.textColor = .white
         label.font = .systemFont(ofSize: 11)
-       // let image = UIImageView()
         view.addArrangedSubview(label)
-       // view.addArrangedSubview(image)
-       // image.image = UIImage(named: "mapPoint")
-       // image.contentMode = .scaleAspectFit
         label.text = "\(counter)"
         
         view.snp.makeConstraints { make in
@@ -632,6 +629,8 @@ class RouteDetailsViewController: UIViewController {
 
         let backTap = UITapGestureRecognizer(target: self, action: #selector(backToMain))
         backButton.addGestureRecognizer(backTap)
+        let favoriteTap = UITapGestureRecognizer(target: self, action: #selector(favoriteAction))
+        favoriteButton.addGestureRecognizer(favoriteTap)
 
         let leftBarButtonItem = UIBarButtonItem(customView: view)
         self.navigationItem.leftBarButtonItem = leftBarButtonItem
@@ -640,6 +639,22 @@ class RouteDetailsViewController: UIViewController {
     @objc func backToMain() {
         self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func favoriteAction() {
+        guard let last = self.tabBarController?.viewControllers?.last else { return }
+        guard let nav = last.tabBarController?.viewControllers?.last as? UINavigationController else { return }
+        let lastVCInNavController = nav.viewControllers.last
+        let convertedProfileVC = lastVCInNavController as? FavoritesViewController
+        guard let convertedProfileVC else { return }
+        if convertedProfileVC.routes.contains(where: { $0 === route }) {
+            print(1)
+        } else {
+            convertedProfileVC.favCounter += 1
+            last.tabBarController?.tabBar.items?.last?.badgeValue = "\(convertedProfileVC.favCounter)"
+            convertedProfileVC.routes.append(route)
+            convertedProfileVC.routeTableView.reloadData()
+        }
     }
 }
 
