@@ -440,6 +440,7 @@ class RouteDetailsViewController: UIViewController {
         makeConstraint()
         set()
         setNavigationBar()
+        map.delegate = self
     }
     
     private func set() {
@@ -503,7 +504,7 @@ class RouteDetailsViewController: UIViewController {
         fiveDescrCityLabel.text = route.fiveDescrCity
     }
     
-    private func createMarker(coordinate:CLLocationCoordinate2D) {
+    private func createMarker(coordinate:CLLocationCoordinate2D, dict: [String: Any]) {
         let marker = GMSMarker(position: coordinate)
         let view = UIStackView()
         view.axis = .horizontal
@@ -526,6 +527,7 @@ class RouteDetailsViewController: UIViewController {
         
         marker.iconView = view
         marker.map = map
+        marker.userData = dict
         markers.append(marker)
     }
 
@@ -534,33 +536,63 @@ class RouteDetailsViewController: UIViewController {
               let longOne = Double(route.longOne)
         else { return }
         let coordOne = CLLocationCoordinate2D(latitude: latOne, longitude: longOne)
-        self.createMarker(coordinate: coordOne)
+        let nameOne = route.oneCityName
+        let imageURLOne = route.oneImageCityURL
+        let detailDescriptionOne = ""
+        let coordinatesOne = route.oneCoordinatesCity
+        let openURLOne = route.oneImageCityURL
+        
+        let dictOne = ["name": nameOne, "description": detailDescriptionOne,"imageURL": imageURLOne, "coordinates": coordinatesOne, "openURL": openURLOne]
+        self.createMarker(coordinate: coordOne, dict: dictOne)
         self.moveCamera(to: coordOne)
 
         guard let latTwo = Double(route.latTwo),
               let longTwo = Double(route.longTwo)
         else { return }
         let coordTwo = CLLocationCoordinate2D(latitude: latTwo, longitude: longTwo)
-        self.createMarker(coordinate: coordTwo)
+        let nameTwo = route.twoCityName
+        let imageURLTwo = route.twoImageCityURL
+        let detailDescriptionTwo = ""
+        let coordinatesTwo = route.twoCoordinatesCity
+        let openURLTwo = route.twoImageCityURL
+        let dictTwo = ["name": nameTwo, "description": detailDescriptionTwo,"imageURL": imageURLTwo, "coordinates": coordinatesTwo, "openURL": openURLTwo]
+        self.createMarker(coordinate: coordTwo, dict: dictTwo)
 
         guard let latThree = Double(route.latThree),
               let longThree = Double(route.longThree)
         else { return }
         let coordThree = CLLocationCoordinate2D(latitude: latThree, longitude: longThree)
-        self.createMarker(coordinate: coordThree)
+        let nameThree = route.threeCityName
+        let imageURLThree = route.threeImageCityURL
+        let detailDescriptionThree = ""
+        let coordinatesThree = route.threeCoordinatesCity
+        let openURLThree = route.threeImageCityURL
+        let dictThree = ["name": nameThree, "description": detailDescriptionThree,"imageURL": imageURLThree, "coordinates": coordinatesThree, "openURL": openURLThree]
+        self.createMarker(coordinate: coordThree, dict: dictThree)
                 
         guard let latFour = Double(route.latFour),
               let longFour = Double(route.longFour)
         else { return }
         let coordFour = CLLocationCoordinate2D(latitude: latFour, longitude: longFour)
-        self.createMarker(coordinate: coordFour)
+        let nameFour = route.fourCityName
+        let imageURLFour = route.fourImageCityURL
+        let detailDescriptionFour = ""
+        let coordinatesFour = route.fourCoordinatesCity
+        let openURLFour = route.fourImageCityURL
+        let dictFour = ["name": nameFour, "description": detailDescriptionFour,"imageURL": imageURLFour, "coordinates": coordinatesFour, "openURL": openURLFour]
+        self.createMarker(coordinate: coordFour, dict: dictFour)
 
         guard let latFive = Double(route.latFive),
               let longFive = Double(route.longFive)
         else { return }
         let coordFive = CLLocationCoordinate2D(latitude: latFive, longitude: longFive)
-        self.createMarker(coordinate: coordFive)
-
+        let nameFive = route.fiveCityName
+        let imageURLFive = route.fiveImageCityURL
+        let detailDescriptionFive = ""
+        let coordinatesFive = route.fiveCoordinatesCity
+        let openURLFive = route.fiveImageCityURL
+        let dictFive = ["name": nameFive, "imageURL": imageURLFive, "description": detailDescriptionFive, "coordinates": coordinatesFive, "openURL": openURLFive]
+        self.createMarker(coordinate: coordFive, dict: dictFive)
     }
     
     private func moveCamera(to: CLLocationCoordinate2D) {
@@ -605,6 +637,34 @@ class RouteDetailsViewController: UIViewController {
     @objc func backToMain() {
         self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.popViewController(animated: true)
+    }
+}
+
+extension RouteDetailsViewController: GMSMapViewDelegate {
+    
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        guard let data = marker.userData as? [String: Any] else {
+            return true
+        }
+        let name = data["name"] as? String ?? ""
+        let imageURL = data["imageURL"] as? String ?? ""
+        let detailDescription = data["description"] as? String ?? ""
+        let coordinates = data["coordinates"] as? String ?? ""
+        let openURL = data["openURL"] as? String ?? ""
+        
+        let createMarkerVC = MarkerViewController(name: name, detailDescription: detailDescription, imageURL: imageURL, coordinates: coordinates, openURL: openURL)
+        createMarkerVC.modalPresentationStyle = .overFullScreen
+        createMarkerVC.modalTransitionStyle = .crossDissolve
+        //self.present(createMarkerVC, animated: true)        //navigationController?.pushViewController(createToDoListVC, animated: true)
+        
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            
+            topController.present(createMarkerVC, animated: true)
+        }
+        return true
     }
 }
 
