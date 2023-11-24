@@ -530,15 +530,41 @@ class RouteDetailsViewController: UIViewController {
     }
 
     private func getCoordinate() {
-        guard let lat = Double(route.lat),
-              let long = Double(route.long) else { return }
-        let coord = CLLocationCoordinate2D(latitude: lat, longitude: long)
-        self.createMarker(coordinate: coord)
-        self.moveCamera(to: coord)
+        guard let latOne = Double(route.latOne),
+              let longOne = Double(route.longOne)
+        else { return }
+        let coordOne = CLLocationCoordinate2D(latitude: latOne, longitude: longOne)
+        self.createMarker(coordinate: coordOne)
+        self.moveCamera(to: coordOne)
+
+        guard let latTwo = Double(route.latTwo),
+              let longTwo = Double(route.longTwo)
+        else { return }
+        let coordTwo = CLLocationCoordinate2D(latitude: latTwo, longitude: longTwo)
+        self.createMarker(coordinate: coordTwo)
+
+        guard let latThree = Double(route.latThree),
+              let longThree = Double(route.longThree)
+        else { return }
+        let coordThree = CLLocationCoordinate2D(latitude: latThree, longitude: longThree)
+        self.createMarker(coordinate: coordThree)
+                
+        guard let latFour = Double(route.latFour),
+              let longFour = Double(route.longFour)
+        else { return }
+        let coordFour = CLLocationCoordinate2D(latitude: latFour, longitude: longFour)
+        self.createMarker(coordinate: coordFour)
+
+        guard let latFive = Double(route.latFive),
+              let longFive = Double(route.longFive)
+        else { return }
+        let coordFive = CLLocationCoordinate2D(latitude: latFive, longitude: longFive)
+        self.createMarker(coordinate: coordFive)
+
     }
     
     private func moveCamera(to: CLLocationCoordinate2D) {
-        map.camera = GMSCameraPosition(target: to, zoom: 10)
+        map.camera = GMSCameraPosition(target: to, zoom: 8)
     }
     
     private func setNavigationBar() {

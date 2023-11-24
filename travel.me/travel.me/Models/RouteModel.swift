@@ -12,8 +12,17 @@ class RouteModel {
     var name: String
     var description: String
     var detailDescription: String
-    var lat: String
-    var long: String
+    
+    var latOne: String
+    var longOne: String
+    var latTwo: String
+    var longTwo: String
+    var latThree: String
+    var longThree: String
+    var latFour: String
+    var longFour: String
+    var latFive: String
+    var longFive: String
     
     var oneCityName: String
     var oneCoordinatesCity: String
@@ -47,8 +56,17 @@ class RouteModel {
         dict["name"] = name
         dict["description"] = description
         dict["detailDescription"] = detailDescription
-        dict["lat"] = lat
-        dict["long"] = long
+        
+        dict["latOne"] = latOne
+        dict["longOne"] = longOne
+        dict["latTwo"] = latTwo
+        dict["longTwo"] = longTwo
+        dict["latThree"] = latThree
+        dict["longThree"] = longThree
+        dict["latFour"] = latFour
+        dict["longFour"] = longFour
+        dict["latFive"] = latFive
+        dict["longFive"] = longFive
         
         dict["oneCityName"] = oneCityName
         dict["oneCoordinatesCity"] = oneCoordinatesCity
@@ -83,8 +101,17 @@ class RouteModel {
               let name = dict["name"] as? String,
               let description = dict["description"] as? String,
               let detailDescription = dict["detailDescription"] as? String,
-              let lat = dict["lat"] as? String,
-              let long = dict["long"] as? String,
+              
+              let latOne = dict["latOne"] as? String,
+              let longOne = dict["longOne"] as? String,
+              let latTwo = dict["latTwo"] as? String,
+              let longTwo = dict["longTwo"] as? String,
+              let latThree = dict["latThree"] as? String,
+              let longThree = dict["longThree"] as? String,
+              let latFour = dict["latFour"] as? String,
+              let longFour = dict["longFour"] as? String,
+              let latFive = dict["latFive"] as? String,
+              let longFive = dict["longFive"] as? String,
               
               let oneCityName = dict["oneCityName"] as? String,
               let oneCoordinatesCity = dict["oneCoordinatesCity"] as? String,
@@ -121,8 +148,16 @@ class RouteModel {
         self.name = name
         self.description = description
         self.detailDescription = detailDescription
-        self.lat = lat
-        self.long = long
+        self.latOne = latOne
+        self.longOne = longOne
+        self.latTwo = latTwo
+        self.longTwo = longTwo
+        self.latThree = latThree
+        self.longThree = longThree
+        self.latFour = latFour
+        self.longFour = longFour
+        self.latFive = latFive
+        self.longFive = longFive
         
         self.oneCityName = oneCityName
         self.oneCoordinatesCity = oneCoordinatesCity
