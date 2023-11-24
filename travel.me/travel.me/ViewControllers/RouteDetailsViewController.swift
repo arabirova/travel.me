@@ -14,6 +14,7 @@ class RouteDetailsViewController: UIViewController {
     private var route: RouteModel
     var markers: [GMSMarker] = []
     var coordinates: [CLLocationCoordinate2D] = []
+    private var counter = 0
     
     init(route: RouteModel) {
         self.route = route
@@ -506,23 +507,25 @@ class RouteDetailsViewController: UIViewController {
     
     private func createMarker(coordinate:CLLocationCoordinate2D, dict: [String: Any]) {
         let marker = GMSMarker(position: coordinate)
+        counter += 1
         let view = UIStackView()
         view.axis = .horizontal
-        view.spacing = 0
         view.distribution = .fill
-        let image = UIImageView()
-        view.addArrangedSubview(image)
-        image.image = UIImage(named: "mapPoint")
-        image.contentMode = .scaleAspectFit
-        
-        
-        image.snp.makeConstraints { make in
-            make.height.width.equalTo(30)
-        }
+        view.backgroundColor = .black
+        view.layer.cornerRadius = 8
+        let label = UILabel()
+        label.textAlignment = .center
+        label.textColor = .white
+        label.font = .systemFont(ofSize: 11)
+       // let image = UIImageView()
+        view.addArrangedSubview(label)
+       // view.addArrangedSubview(image)
+       // image.image = UIImage(named: "mapPoint")
+       // image.contentMode = .scaleAspectFit
+        label.text = "\(counter)"
         
         view.snp.makeConstraints { make in
-            make.height.width.equalTo(40)
-            
+            make.height.width.equalTo(24)
         }
         
         marker.iconView = view
