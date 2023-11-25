@@ -14,6 +14,8 @@ class RouteDetailsViewController: UIViewController {
     private var route: RouteModel
     var markers: [GMSMarker] = []
     var coordinates: [CLLocationCoordinate2D] = []
+    private var counter = 0
+    private var favCounter = 0
     
     init(route: RouteModel) {
         self.route = route
@@ -434,12 +436,13 @@ class RouteDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        self.tabBarController?.tabBar.isHidden = true
+       // self.tabBarController?.tabBar.isHidden = true
+        setNavigationBar()
         getCoordinate()
         makeUI()
         makeConstraint()
         set()
-        setNavigationBar()
+        map.delegate = self
     }
     
     private func set() {
@@ -503,29 +506,28 @@ class RouteDetailsViewController: UIViewController {
         fiveDescrCityLabel.text = route.fiveDescrCity
     }
     
-    private func createMarker(coordinate:CLLocationCoordinate2D) {
+    private func createMarker(coordinate:CLLocationCoordinate2D, dict: [String: Any]) {
         let marker = GMSMarker(position: coordinate)
+        counter += 1
         let view = UIStackView()
         view.axis = .horizontal
-        view.spacing = 0
         view.distribution = .fill
-        let image = UIImageView()
-        view.addArrangedSubview(image)
-        image.image = UIImage(named: "mapPoint")
-        image.contentMode = .scaleAspectFit
-        
-        
-        image.snp.makeConstraints { make in
-            make.height.width.equalTo(30)
-        }
+        view.backgroundColor = .black
+        view.layer.cornerRadius = 8
+        let label = UILabel()
+        label.textAlignment = .center
+        label.textColor = .white
+        label.font = .systemFont(ofSize: 11)
+        view.addArrangedSubview(label)
+        label.text = "\(counter)"
         
         view.snp.makeConstraints { make in
-            make.height.width.equalTo(40)
-            
+            make.height.width.equalTo(24)
         }
         
         marker.iconView = view
         marker.map = map
+        marker.userData = dict
         markers.append(marker)
     }
 
@@ -534,33 +536,63 @@ class RouteDetailsViewController: UIViewController {
               let longOne = Double(route.longOne)
         else { return }
         let coordOne = CLLocationCoordinate2D(latitude: latOne, longitude: longOne)
-        self.createMarker(coordinate: coordOne)
+        let nameOne = route.oneCityName
+        let imageURLOne = route.oneImageCityURL
+        let detailDescriptionOne = ""
+        let coordinatesOne = route.oneCoordinatesCity
+        let openURLOne = route.oneImageCityURL
+        
+        let dictOne = ["name": nameOne, "description": detailDescriptionOne,"imageURL": imageURLOne, "coordinates": coordinatesOne, "openURL": openURLOne]
+        self.createMarker(coordinate: coordOne, dict: dictOne)
         self.moveCamera(to: coordOne)
 
         guard let latTwo = Double(route.latTwo),
               let longTwo = Double(route.longTwo)
         else { return }
         let coordTwo = CLLocationCoordinate2D(latitude: latTwo, longitude: longTwo)
-        self.createMarker(coordinate: coordTwo)
+        let nameTwo = route.twoCityName
+        let imageURLTwo = route.twoImageCityURL
+        let detailDescriptionTwo = ""
+        let coordinatesTwo = route.twoCoordinatesCity
+        let openURLTwo = route.twoImageCityURL
+        let dictTwo = ["name": nameTwo, "description": detailDescriptionTwo,"imageURL": imageURLTwo, "coordinates": coordinatesTwo, "openURL": openURLTwo]
+        self.createMarker(coordinate: coordTwo, dict: dictTwo)
 
         guard let latThree = Double(route.latThree),
               let longThree = Double(route.longThree)
         else { return }
         let coordThree = CLLocationCoordinate2D(latitude: latThree, longitude: longThree)
-        self.createMarker(coordinate: coordThree)
+        let nameThree = route.threeCityName
+        let imageURLThree = route.threeImageCityURL
+        let detailDescriptionThree = ""
+        let coordinatesThree = route.threeCoordinatesCity
+        let openURLThree = route.threeImageCityURL
+        let dictThree = ["name": nameThree, "description": detailDescriptionThree,"imageURL": imageURLThree, "coordinates": coordinatesThree, "openURL": openURLThree]
+        self.createMarker(coordinate: coordThree, dict: dictThree)
                 
         guard let latFour = Double(route.latFour),
               let longFour = Double(route.longFour)
         else { return }
         let coordFour = CLLocationCoordinate2D(latitude: latFour, longitude: longFour)
-        self.createMarker(coordinate: coordFour)
+        let nameFour = route.fourCityName
+        let imageURLFour = route.fourImageCityURL
+        let detailDescriptionFour = ""
+        let coordinatesFour = route.fourCoordinatesCity
+        let openURLFour = route.fourImageCityURL
+        let dictFour = ["name": nameFour, "description": detailDescriptionFour,"imageURL": imageURLFour, "coordinates": coordinatesFour, "openURL": openURLFour]
+        self.createMarker(coordinate: coordFour, dict: dictFour)
 
         guard let latFive = Double(route.latFive),
               let longFive = Double(route.longFive)
         else { return }
         let coordFive = CLLocationCoordinate2D(latitude: latFive, longitude: longFive)
-        self.createMarker(coordinate: coordFive)
-
+        let nameFive = route.fiveCityName
+        let imageURLFive = route.fiveImageCityURL
+        let detailDescriptionFive = ""
+        let coordinatesFive = route.fiveCoordinatesCity
+        let openURLFive = route.fiveImageCityURL
+        let dictFive = ["name": nameFive, "imageURL": imageURLFive, "description": detailDescriptionFive, "coordinates": coordinatesFive, "openURL": openURLFive]
+        self.createMarker(coordinate: coordFive, dict: dictFive)
     }
     
     private func moveCamera(to: CLLocationCoordinate2D) {
@@ -597,14 +629,103 @@ class RouteDetailsViewController: UIViewController {
 
         let backTap = UITapGestureRecognizer(target: self, action: #selector(backToMain))
         backButton.addGestureRecognizer(backTap)
+        let favoriteTap = UITapGestureRecognizer(target: self, action: #selector(favoriteAction))
+        favoriteButton.addGestureRecognizer(favoriteTap)
+
+        let leftBarButtonItem = UIBarButtonItem(customView: view)
+        self.navigationItem.leftBarButtonItem = leftBarButtonItem
+    }
+    
+    private func setNavigationBarFavorite() {
+        
+        self.navigationItem.setHidesBackButton(true, animated:false)
+        let view = UIView()
+        let backButton = UIButton()
+        backButton.setImage(UIImage(named: "back"), for: .normal)
+        let favoriteButton = UIButton()
+        favoriteButton.setImage(UIImage(named: "favoriteActive"), for: .normal)
+
+        view.addSubview(backButton)
+        view.addSubview(favoriteButton)
+        
+        view.snp.makeConstraints { make in
+            make.height.equalTo(45)
+            make.width.equalTo(self.view.frame.width)
+        }
+        
+        backButton.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leading)
+            make.height.width.equalTo(35)
+        }
+        
+        favoriteButton.snp.makeConstraints { make in
+            make.trailing.equalTo(view.snp.trailing)
+            make.height.width.equalTo(35)
+        }
+
+
+        let backTap = UITapGestureRecognizer(target: self, action: #selector(backToMain))
+        backButton.addGestureRecognizer(backTap)
+        let favoriteTap = UITapGestureRecognizer(target: self, action: #selector(favoriteAction))
+        favoriteButton.addGestureRecognizer(favoriteTap)
 
         let leftBarButtonItem = UIBarButtonItem(customView: view)
         self.navigationItem.leftBarButtonItem = leftBarButtonItem
     }
 
+
     @objc func backToMain() {
         self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func favoriteAction() {
+        guard let last = self.tabBarController?.viewControllers?.last else { return }
+        guard let nav = last.tabBarController?.viewControllers?.last as? UINavigationController else { return }
+        let lastVCInNavController = nav.viewControllers.last
+        let convertedProfileVC = lastVCInNavController as? FavoritesViewController
+        guard let convertedProfileVC else { return }
+        if convertedProfileVC.routes.contains(where: { $0 === route }) {
+            print(1)
+        } else {
+            convertedProfileVC.favCounter += 1
+            last.tabBarController?.tabBar.items?.last?.badgeValue = "\(convertedProfileVC.favCounter)"
+            convertedProfileVC.routes.append(route)
+            setNavigationBarFavorite()
+            let encodedData = try? JSONEncoder().encode(convertedProfileVC.routes)
+            let userDefaults = UserDefaults.standard
+            userDefaults.set(encodedData, forKey: "routes")
+            convertedProfileVC.routeTableView.reloadData()
+
+        }
+    }
+}
+
+extension RouteDetailsViewController: GMSMapViewDelegate {
+    
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        guard let data = marker.userData as? [String: Any] else {
+            return true
+        }
+        let name = data["name"] as? String ?? ""
+        let imageURL = data["imageURL"] as? String ?? ""
+        let detailDescription = data["description"] as? String ?? ""
+        let coordinates = data["coordinates"] as? String ?? ""
+        let openURL = data["openURL"] as? String ?? ""
+        
+        let createMarkerVC = MarkerViewController(name: name, detailDescription: detailDescription, imageURL: imageURL, coordinates: coordinates, openURL: openURL)
+        createMarkerVC.modalPresentationStyle = .overFullScreen
+        createMarkerVC.modalTransitionStyle = .crossDissolve
+        //self.present(createMarkerVC, animated: true)        //navigationController?.pushViewController(createToDoListVC, animated: true)
+        
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            
+            topController.present(createMarkerVC, animated: true)
+        }
+        return true
     }
 }
 
