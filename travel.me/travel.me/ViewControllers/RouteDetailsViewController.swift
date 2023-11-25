@@ -436,13 +436,26 @@ class RouteDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-       // self.tabBarController?.tabBar.isHidden = true
-        setNavigationBar()
         getCoordinate()
         makeUI()
         makeConstraint()
         set()
         map.delegate = self
+        checkNavigationBar()
+    }
+    
+    func checkNavigationBar() {
+        guard let last = self.tabBarController?.viewControllers?.last else { return }
+        guard let nav = last.tabBarController?.viewControllers?.last as? UINavigationController else { return }
+        let lastVCInNavController = nav.viewControllers.last
+        let convertedProfileVC = lastVCInNavController as? FavoritesViewController
+        guard let convertedProfileVC else { return }
+        if convertedProfileVC.routes.contains(where: { $0 === route }) {
+            setNavigationBarFavorite()
+        } else {
+            
+            setNavigationBar()
+        }
     }
     
     private func set() {
@@ -686,7 +699,22 @@ class RouteDetailsViewController: UIViewController {
         let convertedProfileVC = lastVCInNavController as? FavoritesViewController
         guard let convertedProfileVC else { return }
         if convertedProfileVC.routes.contains(where: { $0 === route }) {
-            print(1)
+            if convertedProfileVC.favCounter > 1 {
+                convertedProfileVC.favCounter -= 1
+                last.tabBarController?.tabBar.items?.last?.badgeValue = "\(convertedProfileVC.favCounter)"
+            } else {
+                convertedProfileVC.favCounter -= 1
+                last.tabBarController?.tabBar.items?.last?.badgeValue = nil
+            }
+            let conv = convertedProfileVC.routes.filter(){$0 !== route}
+            convertedProfileVC.routes = conv
+            let encodedData = try? JSONEncoder().encode(convertedProfileVC.routes)
+            let userDefaults = UserDefaults.standard
+            userDefaults.set(encodedData, forKey: "routes")
+            convertedProfileVC.routeTableView.reloadData()
+            setNavigationBar()
+            
+            print("Повтор значения")
         } else {
             convertedProfileVC.favCounter += 1
             last.tabBarController?.tabBar.items?.last?.badgeValue = "\(convertedProfileVC.favCounter)"
@@ -696,7 +724,7 @@ class RouteDetailsViewController: UIViewController {
             let userDefaults = UserDefaults.standard
             userDefaults.set(encodedData, forKey: "routes")
             convertedProfileVC.routeTableView.reloadData()
-
+            
         }
     }
 }

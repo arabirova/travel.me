@@ -73,25 +73,6 @@ class FavoriteCell: UITableViewCell {
         }
     }
     
-    func set(route: RouteModel) {
-        
-        let userDefaults = UserDefaults.standard
-        if let savedData = userDefaults.object(forKey: "routes") as? Data {
-            do{
-                let savedContacts = try JSONDecoder().decode([RouteModel].self, from: savedData)
-                savedContacts.forEach { model in
-                    setCell(route: model)
-                }
-
-            } catch {
-                
-            }
-            
-            
-        }
-        
-    }
-    
     func setCell(route: RouteModel) {
                 DispatchQueue.global(qos: .userInteractive).async { [weak self] in
                     guard let url = URL(string: route.imageURL),

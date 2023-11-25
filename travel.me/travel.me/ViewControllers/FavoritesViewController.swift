@@ -11,7 +11,6 @@ import SnapKit
 class FavoritesViewController: UIViewController {
     
     var routes: [RouteModel] = []
-    var guides: [GuideModel] = []
     var favCounter = 0
         
     lazy var routeTableView: UITableView = {
@@ -23,13 +22,11 @@ class FavoritesViewController: UIViewController {
         return table
     }()
     
-    lazy var guideTableView: UITableView = {
-        let table = UITableView()
-        table.dataSource = self
-        table.delegate = self
-        table.separatorStyle = .none
-        table.register(FavoriteGuideCell.self, forCellReuseIdentifier: FavoriteGuideCell.id)
-        return table
+    private lazy var deleteButton: UIButton = {
+       let button = UIButton()
+        button.setImage(UIImage(systemName: "trash"), for: .normal)
+        button.addTarget(self, action: #selector(deleteAction), for: .touchUpInside)
+       return button
     }()
     
     init() {
@@ -42,20 +39,21 @@ class FavoritesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        checkFavorite()
+        makeTitle()
+        makeUI()
+        makeConstraints()
+    }
+    
+    private func checkFavorite() {
         let userDefaults = UserDefaults.standard
         if let savedData = userDefaults.object(forKey: "routes") as? Data {
             do{
                 let savedContacts = try JSONDecoder().decode([RouteModel].self, from: savedData)
-                routes = savedContacts
+                self.routes = savedContacts
             } catch {
             }
         }
-
-        makeTitle()
-        makeUI()
-        makeConstraints()
-
     }
     
     private func makeTitle() {
@@ -71,65 +69,56 @@ class FavoritesViewController: UIViewController {
     
     private func makeUI() {
         self.view.addSubview(routeTableView)
-        self.view.addSubview(guideTableView)
-
+        self.view.addSubview(deleteButton)
     }
     
     private func makeConstraints() {
-
         routeTableView.snp.makeConstraints { make in
-            make.top.trailing.leading.equalToSuperview()
-            make.bottom.equalTo(guideTableView.snp.top)
-            
-        
+            make.edges.equalToSuperview()
         }
-        guideTableView.snp.makeConstraints { make in
-            make.trailing.leading.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-            make.height.equalTo(295)
-
+        
+        deleteButton.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview().inset(16)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(16)
+            make.height.width.equalTo(30)
         }
     }
     
-    @objc func segmentAction(sender: UISegmentedControl) {
-
-        }
+    @objc func deleteAction() {
+        routes.removeAll()
+        self.favCounter = 0
+        routeTableView.reloadData()
+        let encodedData = try? JSONEncoder().encode(routes)
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(encodedData, forKey: "routes")
+        guard let last = self.tabBarController?.viewControllers?.last else { return }
+        last.tabBarController?.tabBar.items?.last?.badgeValue = nil
+    }
 }
 
 extension FavoritesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == routeTableView {
             return routes.count
-        } else if tableView == guideTableView {
-            return guides.count
-        } else {
-            return 0
         }
-    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView == routeTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteCell.id, for: indexPath)
+        
             guard let favoriteCell = cell as? FavoriteCell else { return .init() }
-            favoriteCell.set(route: routes[indexPath.row])
+            favoriteCell.setCell(route: routes[indexPath.row])
             return favoriteCell
-        } else if tableView == guideTableView {
-            let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteGuideCell.id, for: indexPath)
-            guard let routeCell = cell as? FavoriteGuideCell else { return .init() }
-            routeCell.set(guide: guides[indexPath.row])
-            return routeCell
-        } else {
-            
-            return UITableViewCell()
-        }
     }
 }
 
     extension FavoritesViewController: UITableViewDelegate {
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            tableView.deselectRow(at: indexPath, animated: true)
-            let detailVC = RouteDetailsViewController(route: routes[indexPath.row])
-            navigationController?.pushViewController(detailVC, animated: true)
+            guard let first = self.tabBarController?.viewControllers?.first else { return }
+            guard let nav = first.tabBarController?.viewControllers?.first as? UINavigationController else { return }
+            self.tabBarController?.selectedIndex = 0
+            nav.popToRootViewController(animated: true)
+           
+            guard let routesVC = nav.viewControllers.first as? RoutesViewController else { return }
+            routesVC.navigationController?.pushViewController(RouteDetailsViewController(route: routes[indexPath.row]), animated: true)
         }
     }
 
