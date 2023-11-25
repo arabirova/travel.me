@@ -7,7 +7,7 @@
 
 import Foundation
 
-class RouteModel {
+class RouteModel: Codable {
     var imageURL: String
     var name: String
     var description: String
@@ -48,6 +48,9 @@ class RouteModel {
     var fiveCoordinatesCity: String
     var fiveImageCityURL: String
     var fiveDescrCity: String
+    
+    var activeFavorite: Bool
+
     
     
     var asDict: [String: Any] {
@@ -93,6 +96,8 @@ class RouteModel {
         dict["fiveImageCityURL"] = fiveImageCityURL
         dict["fiveDescrCity"] = fiveDescrCity
         
+        dict["activeFavorite"] = activeFavorite
+        
         return dict
     }
     
@@ -136,7 +141,9 @@ class RouteModel {
               let fiveCityName = dict["fiveCityName"] as? String,
               let fiveCoordinatesCity = dict["fiveCoordinatesCity"] as? String,
               let fiveImageCityURL = dict["fiveImageCityURL"] as? String,
-              let fiveDescrCity = dict["fiveDescrCity"] as? String
+              let fiveDescrCity = dict["fiveDescrCity"] as? String,
+              
+              let activeFavorite = dict["activeFavorite"] as? Bool
                 
         else {
             let error = "Parsing contact error"
@@ -183,6 +190,7 @@ class RouteModel {
         self.fiveCoordinatesCity = fiveCoordinatesCity
         self.fiveImageCityURL = fiveImageCityURL
         self.fiveDescrCity = fiveDescrCity
+        self.activeFavorite = activeFavorite
     }
 }
 

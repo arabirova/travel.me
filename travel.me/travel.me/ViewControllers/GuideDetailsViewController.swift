@@ -152,7 +152,7 @@ class GuideDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tabBarController?.tabBar.isHidden = true
+        //self.tabBarController?.tabBar.isHidden = true
         view.backgroundColor = .white
         makeUI()
         makeConstraint()
@@ -264,6 +264,45 @@ class GuideDetailsViewController: UIViewController {
         let leftBarButtonItem = UIBarButtonItem(customView: view)
         self.navigationItem.leftBarButtonItem = leftBarButtonItem
     }
+    
+    private func setNavigationBarFavorite() {
+        
+        self.navigationItem.setHidesBackButton(true, animated:false)
+        let view = UIView()
+        let backButton = UIButton()
+        backButton.setImage(UIImage(named: "back"), for: .normal)
+        let favoriteButton = UIButton()
+        favoriteButton.setImage(UIImage(named: "favoriteActive"), for: .normal)
+
+        view.addSubview(backButton)
+        view.addSubview(favoriteButton)
+        
+        view.snp.makeConstraints { make in
+            make.height.equalTo(45)
+            make.width.equalTo(self.view.frame.width)
+        }
+        
+        backButton.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leading)
+            make.height.width.equalTo(35)
+        }
+        
+        favoriteButton.snp.makeConstraints { make in
+            make.trailing.equalTo(view.snp.trailing)
+            make.height.width.equalTo(35)
+        }
+
+
+        let backTap = UITapGestureRecognizer(target: self, action: #selector(backToMain))
+        backButton.addGestureRecognizer(backTap)
+        let favoriteTap = UITapGestureRecognizer(target: self, action: #selector(favoriteAction))
+        favoriteButton.addGestureRecognizer(favoriteTap)
+
+        let leftBarButtonItem = UIBarButtonItem(customView: view)
+        self.navigationItem.leftBarButtonItem = leftBarButtonItem
+    }
+    
+    
 
     @objc func backToMain() {
         self.tabBarController?.tabBar.isHidden = false
@@ -283,6 +322,7 @@ class GuideDetailsViewController: UIViewController {
             last.tabBarController?.tabBar.items?.last?.badgeValue = "\(convertedProfileVC.favCounter)"
             convertedProfileVC.guides.append(guide)
             convertedProfileVC.guideTableView.reloadData()
+            setNavigationBarFavorite()
         }
     }
 }

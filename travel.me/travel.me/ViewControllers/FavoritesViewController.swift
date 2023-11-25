@@ -13,9 +13,7 @@ class FavoritesViewController: UIViewController {
     var routes: [RouteModel] = []
     var guides: [GuideModel] = []
     var favCounter = 0
-    
-
-    
+        
     lazy var routeTableView: UITableView = {
         let table = UITableView()
         table.dataSource = self
@@ -45,14 +43,24 @@ class FavoritesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        let userDefaults = UserDefaults.standard
+        if let savedData = userDefaults.object(forKey: "routes") as? Data {
+            do{
+                let savedContacts = try JSONDecoder().decode([RouteModel].self, from: savedData)
+                routes = savedContacts
+            } catch {
+            }
+        }
+
         makeTitle()
         makeUI()
         makeConstraints()
+
     }
     
     private func makeTitle() {
         let titleLabel = UILabel()
-        titleLabel.text = "#Любимое"
+        titleLabel.text = "#Избранное"
         titleLabel.textColor = .systemGreen
         titleLabel.font = .boldSystemFont(ofSize: 24)
         titleLabel.sizeToFit()
@@ -72,9 +80,14 @@ class FavoritesViewController: UIViewController {
         routeTableView.snp.makeConstraints { make in
             make.top.trailing.leading.equalToSuperview()
             make.bottom.equalTo(guideTableView.snp.top)
+            
+        
         }
         guideTableView.snp.makeConstraints { make in
-            make.trailing.leading.bottom.equalToSuperview()
+            make.trailing.leading.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.height.equalTo(295)
+
         }
     }
     

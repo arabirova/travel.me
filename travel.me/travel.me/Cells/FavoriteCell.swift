@@ -74,18 +74,36 @@ class FavoriteCell: UITableViewCell {
     }
     
     func set(route: RouteModel) {
-        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            guard let url = URL(string: route.imageURL),
-                  let data = try? Data(contentsOf: url),
-                  let image = UIImage(data: data)
-            else { return }
-            DispatchQueue.main.async { [weak self] in
-                self?.image.image = image
-            }
-        }
-        self.nameLabel.text = route.name
-        self.descriptionLabel.text = route.description
         
+        let userDefaults = UserDefaults.standard
+        if let savedData = userDefaults.object(forKey: "routes") as? Data {
+            do{
+                let savedContacts = try JSONDecoder().decode([RouteModel].self, from: savedData)
+                savedContacts.forEach { model in
+                    setCell(route: model)
+                }
+
+            } catch {
+                
+            }
+            
+            
+        }
+        
+    }
+    
+    func setCell(route: RouteModel) {
+                DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+                    guard let url = URL(string: route.imageURL),
+                          let data = try? Data(contentsOf: url),
+                          let image = UIImage(data: data)
+                    else { return }
+                    DispatchQueue.main.async { [weak self] in
+                        self?.image.image = image
+                    }
+                }
+                self.nameLabel.text = route.name
+                self.descriptionLabel.text = route.description
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
