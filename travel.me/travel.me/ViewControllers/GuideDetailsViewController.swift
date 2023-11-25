@@ -234,11 +234,8 @@ class GuideDetailsViewController: UIViewController {
         let view = UIView()
         let backButton = UIButton()
         backButton.setImage(UIImage(named: "back"), for: .normal)
-        let favoriteButton = UIButton()
-        favoriteButton.setImage(UIImage(named: "favorite"), for: .normal)
 
         view.addSubview(backButton)
-        view.addSubview(favoriteButton)
         
         view.snp.makeConstraints { make in
             make.height.equalTo(45)
@@ -249,81 +246,19 @@ class GuideDetailsViewController: UIViewController {
             make.leading.equalTo(view.snp.leading)
             make.height.width.equalTo(35)
         }
-        
-        favoriteButton.snp.makeConstraints { make in
-            make.trailing.equalTo(view.snp.trailing)
-            make.height.width.equalTo(35)
-        }
 
 
         let backTap = UITapGestureRecognizer(target: self, action: #selector(backToMain))
         backButton.addGestureRecognizer(backTap)
-        let favoriteTap = UITapGestureRecognizer(target: self, action: #selector(favoriteAction))
-        favoriteButton.addGestureRecognizer(favoriteTap)
 
         let leftBarButtonItem = UIBarButtonItem(customView: view)
         self.navigationItem.leftBarButtonItem = leftBarButtonItem
     }
-    
-    private func setNavigationBarFavorite() {
-        
-        self.navigationItem.setHidesBackButton(true, animated:false)
-        let view = UIView()
-        let backButton = UIButton()
-        backButton.setImage(UIImage(named: "back"), for: .normal)
-        let favoriteButton = UIButton()
-        favoriteButton.setImage(UIImage(named: "favoriteActive"), for: .normal)
-
-        view.addSubview(backButton)
-        view.addSubview(favoriteButton)
-        
-        view.snp.makeConstraints { make in
-            make.height.equalTo(45)
-            make.width.equalTo(self.view.frame.width)
-        }
-        
-        backButton.snp.makeConstraints { make in
-            make.leading.equalTo(view.snp.leading)
-            make.height.width.equalTo(35)
-        }
-        
-        favoriteButton.snp.makeConstraints { make in
-            make.trailing.equalTo(view.snp.trailing)
-            make.height.width.equalTo(35)
-        }
-
-
-        let backTap = UITapGestureRecognizer(target: self, action: #selector(backToMain))
-        backButton.addGestureRecognizer(backTap)
-        let favoriteTap = UITapGestureRecognizer(target: self, action: #selector(favoriteAction))
-        favoriteButton.addGestureRecognizer(favoriteTap)
-
-        let leftBarButtonItem = UIBarButtonItem(customView: view)
-        self.navigationItem.leftBarButtonItem = leftBarButtonItem
-    }
-    
     
 
     @objc func backToMain() {
         self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.popViewController(animated: true)
-    }
-    
-    @objc func favoriteAction() {
-        guard let last = self.tabBarController?.viewControllers?.last else { return }
-        guard let nav = last.tabBarController?.viewControllers?.last as? UINavigationController else { return }
-        let lastVCInNavController = nav.viewControllers.last
-        let convertedProfileVC = lastVCInNavController as? FavoritesViewController
-        guard let convertedProfileVC else { return }
-        if convertedProfileVC.guides.contains(where: { $0 === guide }) {
-            print(1)
-        } else {
-            convertedProfileVC.favCounter += 1
-            last.tabBarController?.tabBar.items?.last?.badgeValue = "\(convertedProfileVC.favCounter)"
-            convertedProfileVC.guides.append(guide)
-            convertedProfileVC.guideTableView.reloadData()
-            setNavigationBarFavorite()
-        }
     }
 }
 
