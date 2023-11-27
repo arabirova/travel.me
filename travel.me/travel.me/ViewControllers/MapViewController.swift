@@ -143,7 +143,6 @@ extension MapViewController: GMSMapViewDelegate {
         let createMarkerVC = MarkerViewController(name: name, detailDescription: detailDescription, imageURL: imageURL, coordinates: coordinates, openURL: openURL)
         createMarkerVC.modalPresentationStyle = .overFullScreen
         createMarkerVC.modalTransitionStyle = .crossDissolve
-        //self.present(createMarkerVC, animated: true)        //navigationController?.pushViewController(createToDoListVC, animated: true)
         
         if var topController = UIApplication.shared.keyWindow?.rootViewController {
             while let presentedViewController = topController.presentedViewController {

@@ -22,9 +22,16 @@ class FavoritesViewController: UIViewController {
         return table
     }()
     
+    lazy var emptyImage: UIImageView = {
+       let view = UIImageView()
+        view.image = UIImage(named: "emptyImage")
+       return view
+   }()
+    
      lazy var label: UILabel = {
         let label = UILabel()
         label.text = "Пока здесь пусто..."
+         label.textAlignment = .center
         return label
     }()
     
@@ -66,8 +73,10 @@ class FavoritesViewController: UIViewController {
     func favRoutes() {
         if routes.isEmpty {
             label.isHidden = false
+            emptyImage.isHidden = false
         } else {
             label.isHidden = true
+            emptyImage.isHidden = true
         }
     }
     
@@ -113,6 +122,7 @@ class FavoritesViewController: UIViewController {
     
     private func makeUI() {
         self.view.addSubview(routeTableView)
+        self.view.addSubview(emptyImage)
         self.view.addSubview(label)
     }
     
@@ -121,9 +131,16 @@ class FavoritesViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         
-        label.snp.makeConstraints { make in
+        emptyImage.snp.makeConstraints { make in
             make.centerY.equalTo(view.snp.centerY)
             make.centerX.equalTo(view.snp.centerX)
+            make.height.width.equalTo(300)
+
+        }
+        
+        label.snp.makeConstraints { make in
+            make.top.equalTo(emptyImage.snp.bottom)
+            make.trailing.leading.equalToSuperview()
 
         }
     }

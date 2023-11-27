@@ -718,6 +718,8 @@ class RouteDetailsViewController: UIViewController {
             } else {
                 last.tabBarController?.tabBar.items?.last?.badgeValue = nil
                 convertedProfileVC.label.isHidden = false
+                convertedProfileVC.emptyImage.isHidden = false
+
             }
             let conv = convertedProfileVC.routes.filter(){$0 !== route}
             convertedProfileVC.routes = conv
