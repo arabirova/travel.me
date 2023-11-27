@@ -49,7 +49,7 @@ class RouteModel: Codable {
     var fiveImageCityURL: String
     var fiveDescrCity: String
     
-    var activeFavorite: Bool
+    var openURL: String
 
     
     
@@ -96,7 +96,7 @@ class RouteModel: Codable {
         dict["fiveImageCityURL"] = fiveImageCityURL
         dict["fiveDescrCity"] = fiveDescrCity
         
-        dict["activeFavorite"] = activeFavorite
+        dict["openURL"] = openURL
         
         return dict
     }
@@ -143,7 +143,7 @@ class RouteModel: Codable {
               let fiveImageCityURL = dict["fiveImageCityURL"] as? String,
               let fiveDescrCity = dict["fiveDescrCity"] as? String,
               
-              let activeFavorite = dict["activeFavorite"] as? Bool
+              let openURL = dict["openURL"] as? String
                 
         else {
             let error = "Parsing contact error"
@@ -190,7 +190,7 @@ class RouteModel: Codable {
         self.fiveCoordinatesCity = fiveCoordinatesCity
         self.fiveImageCityURL = fiveImageCityURL
         self.fiveDescrCity = fiveDescrCity
-        self.activeFavorite = activeFavorite
+        self.openURL = openURL
     }
 }
 

@@ -13,11 +13,6 @@ class GuideDetailsViewController: UIViewController {
     
     private var guide: GuideModel
     
-    init(guide: GuideModel) {
-        self.guide = guide
-        super.init(nibName: nil, bundle: nil)
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -51,15 +46,6 @@ class GuideDetailsViewController: UIViewController {
         return image
     }()
     
-    private lazy var nameLabel: UILabel = {
-        let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 18)
-        label.textAlignment = .center
-        label.textColor = .white
-        label.numberOfLines = 3
-        return label
-    }()
-    
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = .italicSystemFont(ofSize: 13)
@@ -90,12 +76,25 @@ class GuideDetailsViewController: UIViewController {
         return label
     }()
     
+    init(guide: GuideModel) {
+        self.guide = guide
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        makeUI()
+        makeConstraint()
+        set()
+        setNavigationBar()
+    }
+    
     private func makeUI() {
         self.view.addSubview(scrollView)
         self.scrollView.addSubview(contentView)
         self.contentView.addSubview(image)
         self.contentView.addSubview(imageShadow)
-        self.contentView.addSubview(nameLabel)
         self.contentView.addSubview(descriptionLabel)
         self.contentView.addSubview(segment)
         self.contentView.addSubview(aboutSegmentImage)
@@ -119,12 +118,8 @@ class GuideDetailsViewController: UIViewController {
             make.height.equalTo(150)
         }
         
-        nameLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(image.snp.bottom).offset(-10)
-        }
-        
         descriptionLabel.snp.makeConstraints { make in
+            make.top.equalTo(image.snp.bottom)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
             make.bottom.equalTo(segment.snp.top).inset(-10)
@@ -150,15 +145,6 @@ class GuideDetailsViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        //self.tabBarController?.tabBar.isHidden = true
-        view.backgroundColor = .white
-        makeUI()
-        makeConstraint()
-        set()
-        setNavigationBar()
-    }
     
     private func set() {
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
@@ -174,9 +160,40 @@ class GuideDetailsViewController: UIViewController {
                 self?.aboutSegmentImage.image = imageTransport
             }
         }
-        nameLabel.text = guide.name
         descriptionLabel.text = guide.detailDescription
         aboutSegmentLabel.text = guide.transport
+    }
+    
+    private func setNavigationBar() {
+        
+        self.navigationItem.setHidesBackButton(true, animated:false)
+        let view = UIView()
+        let backButton = UIButton()
+        backButton.setImage(UIImage(named: "back"), for: .normal)
+
+        view.addSubview(backButton)
+        
+        view.snp.makeConstraints { make in
+            make.height.equalTo(45)
+            make.width.equalTo(self.view.frame.width)
+        }
+        
+        backButton.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leading)
+            make.height.width.equalTo(35)
+        }
+
+
+        let backTap = UITapGestureRecognizer(target: self, action: #selector(backToMain))
+        backButton.addGestureRecognizer(backTap)
+
+        let leftBarButtonItem = UIBarButtonItem(customView: view)
+        self.navigationItem.leftBarButtonItem = leftBarButtonItem
+    }
+    
+
+    @objc func backToMain() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func segmentAction(sender: UISegmentedControl) {
@@ -226,39 +243,6 @@ class GuideDetailsViewController: UIViewController {
                 }
             }
         }
-    }
-    
-    private func setNavigationBar() {
-        
-        self.navigationItem.setHidesBackButton(true, animated:false)
-        let view = UIView()
-        let backButton = UIButton()
-        backButton.setImage(UIImage(named: "back"), for: .normal)
-
-        view.addSubview(backButton)
-        
-        view.snp.makeConstraints { make in
-            make.height.equalTo(45)
-            make.width.equalTo(self.view.frame.width)
-        }
-        
-        backButton.snp.makeConstraints { make in
-            make.leading.equalTo(view.snp.leading)
-            make.height.width.equalTo(35)
-        }
-
-
-        let backTap = UITapGestureRecognizer(target: self, action: #selector(backToMain))
-        backButton.addGestureRecognizer(backTap)
-
-        let leftBarButtonItem = UIBarButtonItem(customView: view)
-        self.navigationItem.leftBarButtonItem = leftBarButtonItem
-    }
-    
-
-    @objc func backToMain() {
-        self.tabBarController?.tabBar.isHidden = false
-        self.navigationController?.popViewController(animated: true)
     }
 }
 

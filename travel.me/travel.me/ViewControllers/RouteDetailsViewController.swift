@@ -17,15 +17,6 @@ class RouteDetailsViewController: UIViewController {
     private var counter = 0
     private var favCounter = 0
     
-    init(route: RouteModel) {
-        self.route = route
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     private lazy var scrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.frame = view.bounds
@@ -34,7 +25,7 @@ class RouteDetailsViewController: UIViewController {
     }()
     
     private var contentSize: CGSize{
-        CGSize(width: view.frame.width, height: view.frame.height + 4000)
+        CGSize(width: view.frame.width, height: view.frame.height + 4500)
     }
     
     private lazy var contentView: UIView = {
@@ -225,6 +216,27 @@ class RouteDetailsViewController: UIViewController {
         image.clipsToBounds = true
         return image
     }()
+    
+    init(route: RouteModel) {
+        self.route = route
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        makeUI()
+        makeConstraint()
+        getCoordinate()
+        set()
+        checkNavigationBar()
+        map.delegate = self
+    }
     
     private func makeUI() {
         self.view.addSubview(scrollView)
@@ -433,17 +445,6 @@ class RouteDetailsViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        getCoordinate()
-        makeUI()
-        makeConstraint()
-        set()
-        map.delegate = self
-        checkNavigationBar()
-    }
-    
     func checkNavigationBar() {
         guard let last = self.tabBarController?.viewControllers?.last else { return }
         guard let nav = last.tabBarController?.viewControllers?.last as? UINavigationController else { return }
@@ -453,7 +454,6 @@ class RouteDetailsViewController: UIViewController {
         if convertedProfileVC.routes.contains(where: { $0 === route }) {
             setNavigationBarFavorite()
         } else {
-            
             setNavigationBar()
         }
     }
@@ -553,7 +553,7 @@ class RouteDetailsViewController: UIViewController {
         let imageURLOne = route.oneImageCityURL
         let detailDescriptionOne = ""
         let coordinatesOne = route.oneCoordinatesCity
-        let openURLOne = route.oneImageCityURL
+        let openURLOne = route.openURL
         
         let dictOne = ["name": nameOne, "description": detailDescriptionOne,"imageURL": imageURLOne, "coordinates": coordinatesOne, "openURL": openURLOne]
         self.createMarker(coordinate: coordOne, dict: dictOne)
@@ -567,7 +567,7 @@ class RouteDetailsViewController: UIViewController {
         let imageURLTwo = route.twoImageCityURL
         let detailDescriptionTwo = ""
         let coordinatesTwo = route.twoCoordinatesCity
-        let openURLTwo = route.twoImageCityURL
+        let openURLTwo = route.openURL
         let dictTwo = ["name": nameTwo, "description": detailDescriptionTwo,"imageURL": imageURLTwo, "coordinates": coordinatesTwo, "openURL": openURLTwo]
         self.createMarker(coordinate: coordTwo, dict: dictTwo)
 
@@ -579,7 +579,7 @@ class RouteDetailsViewController: UIViewController {
         let imageURLThree = route.threeImageCityURL
         let detailDescriptionThree = ""
         let coordinatesThree = route.threeCoordinatesCity
-        let openURLThree = route.threeImageCityURL
+        let openURLThree = route.openURL
         let dictThree = ["name": nameThree, "description": detailDescriptionThree,"imageURL": imageURLThree, "coordinates": coordinatesThree, "openURL": openURLThree]
         self.createMarker(coordinate: coordThree, dict: dictThree)
                 
@@ -591,7 +591,7 @@ class RouteDetailsViewController: UIViewController {
         let imageURLFour = route.fourImageCityURL
         let detailDescriptionFour = ""
         let coordinatesFour = route.fourCoordinatesCity
-        let openURLFour = route.fourImageCityURL
+        let openURLFour = route.openURL
         let dictFour = ["name": nameFour, "description": detailDescriptionFour,"imageURL": imageURLFour, "coordinates": coordinatesFour, "openURL": openURLFour]
         self.createMarker(coordinate: coordFour, dict: dictFour)
 
@@ -603,7 +603,7 @@ class RouteDetailsViewController: UIViewController {
         let imageURLFive = route.fiveImageCityURL
         let detailDescriptionFive = ""
         let coordinatesFive = route.fiveCoordinatesCity
-        let openURLFive = route.fiveImageCityURL
+        let openURLFive = route.openURL
         let dictFive = ["name": nameFive, "imageURL": imageURLFive, "description": detailDescriptionFive, "coordinates": coordinatesFive, "openURL": openURLFive]
         self.createMarker(coordinate: coordFive, dict: dictFive)
     }
@@ -688,43 +688,50 @@ class RouteDetailsViewController: UIViewController {
 
 
     @objc func backToMain() {
-        self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc func favoriteAction() {
+    func saveData() {
         guard let last = self.tabBarController?.viewControllers?.last else { return }
         guard let nav = last.tabBarController?.viewControllers?.last as? UINavigationController else { return }
         let lastVCInNavController = nav.viewControllers.last
         let convertedProfileVC = lastVCInNavController as? FavoritesViewController
         guard let convertedProfileVC else { return }
+        let encodedData = try? JSONEncoder().encode(convertedProfileVC.routes)
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(encodedData, forKey: "routes")
+        convertedProfileVC.routeTableView.reloadData()
+    }
+    
+    @objc func favoriteAction() {
+        guard let last = self.tabBarController?.viewControllers?.last else { return }
+        guard let nav = last.tabBarController?.viewControllers?.last as? UINavigationController else { return }
+        
+        let lastVCInNavController = nav.viewControllers.last
+        let convertedProfileVC = lastVCInNavController as? FavoritesViewController
+        guard let convertedProfileVC else { return }
+        
         if convertedProfileVC.routes.contains(where: { $0 === route }) {
+            convertedProfileVC.favCounter -= 1
             if convertedProfileVC.favCounter > 1 {
-                convertedProfileVC.favCounter -= 1
                 last.tabBarController?.tabBar.items?.last?.badgeValue = "\(convertedProfileVC.favCounter)"
             } else {
-                convertedProfileVC.favCounter -= 1
                 last.tabBarController?.tabBar.items?.last?.badgeValue = nil
+                convertedProfileVC.label.isHidden = false
+                convertedProfileVC.emptyImage.isHidden = false
+
             }
             let conv = convertedProfileVC.routes.filter(){$0 !== route}
             convertedProfileVC.routes = conv
-            let encodedData = try? JSONEncoder().encode(convertedProfileVC.routes)
-            let userDefaults = UserDefaults.standard
-            userDefaults.set(encodedData, forKey: "routes")
-            convertedProfileVC.routeTableView.reloadData()
+            saveData()
             setNavigationBar()
-            
-            print("Повтор значения")
         } else {
             convertedProfileVC.favCounter += 1
             last.tabBarController?.tabBar.items?.last?.badgeValue = "\(convertedProfileVC.favCounter)"
             convertedProfileVC.routes.append(route)
             setNavigationBarFavorite()
-            let encodedData = try? JSONEncoder().encode(convertedProfileVC.routes)
-            let userDefaults = UserDefaults.standard
-            userDefaults.set(encodedData, forKey: "routes")
-            convertedProfileVC.routeTableView.reloadData()
-            
+            saveData()
+            convertedProfileVC.favRoutes()
         }
     }
 }
@@ -743,9 +750,7 @@ extension RouteDetailsViewController: GMSMapViewDelegate {
         
         let createMarkerVC = MarkerViewController(name: name, detailDescription: detailDescription, imageURL: imageURL, coordinates: coordinates, openURL: openURL)
         createMarkerVC.modalPresentationStyle = .overFullScreen
-        createMarkerVC.modalTransitionStyle = .crossDissolve
-        //self.present(createMarkerVC, animated: true)        //navigationController?.pushViewController(createToDoListVC, animated: true)
-        
+        createMarkerVC.modalTransitionStyle = .crossDissolve        
         if var topController = UIApplication.shared.keyWindow?.rootViewController {
             while let presentedViewController = topController.presentedViewController {
                 topController = presentedViewController
