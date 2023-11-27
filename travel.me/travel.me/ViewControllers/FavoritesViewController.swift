@@ -22,12 +22,12 @@ class FavoritesViewController: UIViewController {
         return table
     }()
     
-    private lazy var deleteButton: UIButton = {
-       let button = UIButton()
-        button.setImage(UIImage(systemName: "trash"), for: .normal)
-        button.addTarget(self, action: #selector(deleteAction), for: .touchUpInside)
-       return button
-    }()
+//    private lazy var deleteButton: UIButton = {
+//       let button = UIButton()
+//        button.setImage(UIImage(systemName: "trash"), for: .normal)
+//        button.addTarget(self, action: #selector(deleteAction), for: .touchUpInside)
+//       return button
+//    }()
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -57,19 +57,48 @@ class FavoritesViewController: UIViewController {
     }
     
     private func makeTitle() {
+        self.navigationItem.setHidesBackButton(true, animated:false)
+        let view = UIView()
+
         let titleLabel = UILabel()
         titleLabel.text = "#Избранное"
         titleLabel.textColor = .systemGreen
         titleLabel.font = .boldSystemFont(ofSize: 24)
         titleLabel.sizeToFit()
+        
+        let deleteButton = UIButton()
+        deleteButton.setImage(UIImage(systemName: "trash"), for: .normal)
+        deleteButton.tintColor = .black
+        
+        view.addSubview(titleLabel)
+        view.addSubview(deleteButton)
+        
+        view.snp.makeConstraints { make in
+            make.height.equalTo(self.view.frame.height)
+            make.width.equalTo(self.view.frame.width)
+        }
+        
+        titleLabel.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leading)
+            make.centerY.equalTo(view.snp.centerY)
+        }
+        
+        deleteButton.snp.makeConstraints { make in
+            make.trailing.equalTo(view.snp.trailing)
+            make.centerY.equalTo(view.snp.centerY)
+            make.height.width.equalTo(35)
+        }
+        
+        let deleteTap = UITapGestureRecognizer(target: self, action: #selector(deleteAction))
+        deleteButton.addGestureRecognizer(deleteTap)
 
-        let leftItem = UIBarButtonItem(customView: titleLabel)
-        self.navigationItem.leftBarButtonItem = leftItem
+        let leftBarButtonItem = UIBarButtonItem(customView: view)
+        self.navigationItem.leftBarButtonItem = leftBarButtonItem
     }
     
     private func makeUI() {
         self.view.addSubview(routeTableView)
-        self.view.addSubview(deleteButton)
+//        self.view.addSubview(deleteButton)
     }
     
     private func makeConstraints() {
@@ -77,11 +106,11 @@ class FavoritesViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         
-        deleteButton.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview().inset(16)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(16)
-            make.height.width.equalTo(30)
-        }
+//        deleteButton.snp.makeConstraints { make in
+//            make.leading.trailing.bottom.equalToSuperview().inset(16)
+//            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(16)
+//            make.height.width.equalTo(30)
+//        }
     }
     
     @objc func deleteAction() {

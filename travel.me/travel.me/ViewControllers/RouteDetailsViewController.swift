@@ -34,7 +34,7 @@ class RouteDetailsViewController: UIViewController {
     }()
     
     private var contentSize: CGSize{
-        CGSize(width: view.frame.width, height: view.frame.height + 4000)
+        CGSize(width: view.frame.width, height: view.frame.height + 4500)
     }
     
     private lazy var contentView: UIView = {
@@ -440,8 +440,8 @@ class RouteDetailsViewController: UIViewController {
         makeUI()
         makeConstraint()
         set()
-        map.delegate = self
         checkNavigationBar()
+        map.delegate = self
     }
     
     func checkNavigationBar() {
@@ -453,7 +453,6 @@ class RouteDetailsViewController: UIViewController {
         if convertedProfileVC.routes.contains(where: { $0 === route }) {
             setNavigationBarFavorite()
         } else {
-            
             setNavigationBar()
         }
     }
@@ -553,7 +552,7 @@ class RouteDetailsViewController: UIViewController {
         let imageURLOne = route.oneImageCityURL
         let detailDescriptionOne = ""
         let coordinatesOne = route.oneCoordinatesCity
-        let openURLOne = route.oneImageCityURL
+        let openURLOne = route.openURL
         
         let dictOne = ["name": nameOne, "description": detailDescriptionOne,"imageURL": imageURLOne, "coordinates": coordinatesOne, "openURL": openURLOne]
         self.createMarker(coordinate: coordOne, dict: dictOne)
@@ -567,7 +566,7 @@ class RouteDetailsViewController: UIViewController {
         let imageURLTwo = route.twoImageCityURL
         let detailDescriptionTwo = ""
         let coordinatesTwo = route.twoCoordinatesCity
-        let openURLTwo = route.twoImageCityURL
+        let openURLTwo = route.openURL
         let dictTwo = ["name": nameTwo, "description": detailDescriptionTwo,"imageURL": imageURLTwo, "coordinates": coordinatesTwo, "openURL": openURLTwo]
         self.createMarker(coordinate: coordTwo, dict: dictTwo)
 
@@ -579,7 +578,7 @@ class RouteDetailsViewController: UIViewController {
         let imageURLThree = route.threeImageCityURL
         let detailDescriptionThree = ""
         let coordinatesThree = route.threeCoordinatesCity
-        let openURLThree = route.threeImageCityURL
+        let openURLThree = route.openURL
         let dictThree = ["name": nameThree, "description": detailDescriptionThree,"imageURL": imageURLThree, "coordinates": coordinatesThree, "openURL": openURLThree]
         self.createMarker(coordinate: coordThree, dict: dictThree)
                 
@@ -591,7 +590,7 @@ class RouteDetailsViewController: UIViewController {
         let imageURLFour = route.fourImageCityURL
         let detailDescriptionFour = ""
         let coordinatesFour = route.fourCoordinatesCity
-        let openURLFour = route.fourImageCityURL
+        let openURLFour = route.openURL
         let dictFour = ["name": nameFour, "description": detailDescriptionFour,"imageURL": imageURLFour, "coordinates": coordinatesFour, "openURL": openURLFour]
         self.createMarker(coordinate: coordFour, dict: dictFour)
 
@@ -603,7 +602,7 @@ class RouteDetailsViewController: UIViewController {
         let imageURLFive = route.fiveImageCityURL
         let detailDescriptionFive = ""
         let coordinatesFive = route.fiveCoordinatesCity
-        let openURLFive = route.fiveImageCityURL
+        let openURLFive = route.openURL
         let dictFive = ["name": nameFive, "imageURL": imageURLFive, "description": detailDescriptionFive, "coordinates": coordinatesFive, "openURL": openURLFive]
         self.createMarker(coordinate: coordFive, dict: dictFive)
     }
@@ -688,7 +687,6 @@ class RouteDetailsViewController: UIViewController {
 
 
     @objc func backToMain() {
-        self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -743,9 +741,7 @@ extension RouteDetailsViewController: GMSMapViewDelegate {
         
         let createMarkerVC = MarkerViewController(name: name, detailDescription: detailDescription, imageURL: imageURL, coordinates: coordinates, openURL: openURL)
         createMarkerVC.modalPresentationStyle = .overFullScreen
-        createMarkerVC.modalTransitionStyle = .crossDissolve
-        //self.present(createMarkerVC, animated: true)        //navigationController?.pushViewController(createToDoListVC, animated: true)
-        
+        createMarkerVC.modalTransitionStyle = .crossDissolve        
         if var topController = UIApplication.shared.keyWindow?.rootViewController {
             while let presentedViewController = topController.presentedViewController {
                 topController = presentedViewController
