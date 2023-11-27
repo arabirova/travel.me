@@ -59,6 +59,13 @@ class GuidesViewController: UIViewController {
         }
     }
     
+    private func readList() {
+        Environment.ref.child("guides").observeSingleEvent(of: .value, with: { [weak self] snapshot in
+            guard let guideDict = (snapshot.value as? [String: Any]) else { return }
+            self?.parseData(guideDict)
+        })
+    }
+    
     private func parseData(_ dict: [String: Any]) {
         guides.removeAll()
         for (_, value) in dict {
@@ -70,13 +77,6 @@ class GuidesViewController: UIViewController {
         }
         
         self.tableView.reloadData()
-    }
-    
-    private func readList() {
-        Environment.ref.child("guides").observeSingleEvent(of: .value, with: { [weak self] snapshot in
-            guard let guideDict = (snapshot.value as? [String: Any]) else { return }
-            self?.parseData(guideDict)
-        })
     }
 }
 

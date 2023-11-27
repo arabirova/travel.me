@@ -11,6 +11,7 @@ import SnapKit
 class RoutesViewController: UIViewController {
     
     var routes: [RouteModel] = []
+    var favCounter = 0
     
     private lazy var tableView: UITableView = {
         let table = UITableView()
@@ -37,6 +38,8 @@ class RoutesViewController: UIViewController {
         makeConstraints()
         readList()
         changeNav()
+        checkFavBadge()
+    
     }
     
     private func makeTitle() {
@@ -60,6 +63,13 @@ class RoutesViewController: UIViewController {
         }
     }
     
+    private func readList() {
+        Environment.ref.child("routes").observeSingleEvent(of: .value, with: { [weak self] snapshot in
+            guard let routeDict = (snapshot.value as? [String: Any]) else { return }
+            self?.parseData(routeDict)
+        })
+    }
+    
     private func parseData(_ dict: [String: Any]) {
         routes.removeAll()
         for (_, value) in dict {
@@ -69,19 +79,29 @@ class RoutesViewController: UIViewController {
             ) else { return }
             self.routes.append(new)
         }
-        
         self.tableView.reloadData()
-    }
-    
-    private func readList() {
-        Environment.ref.child("routes").observeSingleEvent(of: .value, with: { [weak self] snapshot in
-            guard let routeDict = (snapshot.value as? [String: Any]) else { return }
-            self?.parseData(routeDict)
-        })
     }
     
     private func changeNav() {
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    }
+
+    private func checkFavBadge() {
+        let userDefaults = UserDefaults.standard
+        if let savedData = userDefaults.object(forKey: "routes") as? Data {
+            do{
+                let savedContacts = try JSONDecoder().decode([RouteModel].self, from: savedData)
+                self.favCounter = savedContacts.count
+                guard let last = self.tabBarController?.viewControllers?.first else { return }
+                if favCounter != 0 {
+                    last.tabBarController?.tabBar.items?.last?.badgeValue = "\(favCounter)"
+                } else {
+                    last.tabBarController?.tabBar.items?.last?.badgeValue = nil
+                }
+            } catch {
+                print("Error userDefaults")
+            }
+        }
     }
 }
 

@@ -22,12 +22,11 @@ class FavoritesViewController: UIViewController {
         return table
     }()
     
-//    private lazy var deleteButton: UIButton = {
-//       let button = UIButton()
-//        button.setImage(UIImage(systemName: "trash"), for: .normal)
-//        button.addTarget(self, action: #selector(deleteAction), for: .touchUpInside)
-//       return button
-//    }()
+     lazy var label: UILabel = {
+        let label = UILabel()
+        label.text = "Пока здесь пусто..."
+        return label
+    }()
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -43,6 +42,7 @@ class FavoritesViewController: UIViewController {
         makeTitle()
         makeUI()
         makeConstraints()
+        favRoutes()
     }
     
     private func checkFavorite() {
@@ -51,8 +51,23 @@ class FavoritesViewController: UIViewController {
             do{
                 let savedContacts = try JSONDecoder().decode([RouteModel].self, from: savedData)
                 self.routes = savedContacts
+                favCounter = self.routes.count
+                guard let last = self.tabBarController?.viewControllers?.last else { return }
+                if favCounter != 0 {
+                    last.tabBarController?.tabBar.items?.last?.badgeValue = "\(favCounter)"
+                } else {
+                    last.tabBarController?.tabBar.items?.last?.badgeValue = nil
+                }
             } catch {
             }
+        }
+    }
+    
+    func favRoutes() {
+        if routes.isEmpty {
+            label.isHidden = false
+        } else {
+            label.isHidden = true
         }
     }
     
@@ -98,7 +113,7 @@ class FavoritesViewController: UIViewController {
     
     private func makeUI() {
         self.view.addSubview(routeTableView)
-//        self.view.addSubview(deleteButton)
+        self.view.addSubview(label)
     }
     
     private func makeConstraints() {
@@ -106,12 +121,13 @@ class FavoritesViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         
-//        deleteButton.snp.makeConstraints { make in
-//            make.leading.trailing.bottom.equalToSuperview().inset(16)
-//            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(16)
-//            make.height.width.equalTo(30)
-//        }
+        label.snp.makeConstraints { make in
+            make.centerY.equalTo(view.snp.centerY)
+            make.centerX.equalTo(view.snp.centerX)
+
+        }
     }
+
     
     @objc func deleteAction() {
         routes.removeAll()
@@ -122,6 +138,7 @@ class FavoritesViewController: UIViewController {
         userDefaults.set(encodedData, forKey: "routes")
         guard let last = self.tabBarController?.viewControllers?.last else { return }
         last.tabBarController?.tabBar.items?.last?.badgeValue = nil
+        favRoutes()
     }
 }
 

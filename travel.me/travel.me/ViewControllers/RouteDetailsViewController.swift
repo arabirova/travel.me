@@ -17,15 +17,6 @@ class RouteDetailsViewController: UIViewController {
     private var counter = 0
     private var favCounter = 0
     
-    init(route: RouteModel) {
-        self.route = route
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     private lazy var scrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.frame = view.bounds
@@ -225,6 +216,27 @@ class RouteDetailsViewController: UIViewController {
         image.clipsToBounds = true
         return image
     }()
+    
+    init(route: RouteModel) {
+        self.route = route
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        makeUI()
+        makeConstraint()
+        getCoordinate()
+        set()
+        checkNavigationBar()
+        map.delegate = self
+    }
     
     private func makeUI() {
         self.view.addSubview(scrollView)
@@ -431,17 +443,6 @@ class RouteDetailsViewController: UIViewController {
             make.height.equalTo(237)
             make.width.equalTo(343)
         }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        getCoordinate()
-        makeUI()
-        makeConstraint()
-        set()
-        checkNavigationBar()
-        map.delegate = self
     }
     
     func checkNavigationBar() {
@@ -690,39 +691,45 @@ class RouteDetailsViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc func favoriteAction() {
+    func saveData() {
         guard let last = self.tabBarController?.viewControllers?.last else { return }
         guard let nav = last.tabBarController?.viewControllers?.last as? UINavigationController else { return }
         let lastVCInNavController = nav.viewControllers.last
         let convertedProfileVC = lastVCInNavController as? FavoritesViewController
         guard let convertedProfileVC else { return }
+        let encodedData = try? JSONEncoder().encode(convertedProfileVC.routes)
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(encodedData, forKey: "routes")
+        convertedProfileVC.routeTableView.reloadData()
+    }
+    
+    @objc func favoriteAction() {
+        guard let last = self.tabBarController?.viewControllers?.last else { return }
+        guard let nav = last.tabBarController?.viewControllers?.last as? UINavigationController else { return }
+        
+        let lastVCInNavController = nav.viewControllers.last
+        let convertedProfileVC = lastVCInNavController as? FavoritesViewController
+        guard let convertedProfileVC else { return }
+        
         if convertedProfileVC.routes.contains(where: { $0 === route }) {
+            convertedProfileVC.favCounter -= 1
             if convertedProfileVC.favCounter > 1 {
-                convertedProfileVC.favCounter -= 1
                 last.tabBarController?.tabBar.items?.last?.badgeValue = "\(convertedProfileVC.favCounter)"
             } else {
-                convertedProfileVC.favCounter -= 1
                 last.tabBarController?.tabBar.items?.last?.badgeValue = nil
+                convertedProfileVC.label.isHidden = false
             }
             let conv = convertedProfileVC.routes.filter(){$0 !== route}
             convertedProfileVC.routes = conv
-            let encodedData = try? JSONEncoder().encode(convertedProfileVC.routes)
-            let userDefaults = UserDefaults.standard
-            userDefaults.set(encodedData, forKey: "routes")
-            convertedProfileVC.routeTableView.reloadData()
+            saveData()
             setNavigationBar()
-            
-            print("Повтор значения")
         } else {
             convertedProfileVC.favCounter += 1
             last.tabBarController?.tabBar.items?.last?.badgeValue = "\(convertedProfileVC.favCounter)"
             convertedProfileVC.routes.append(route)
             setNavigationBarFavorite()
-            let encodedData = try? JSONEncoder().encode(convertedProfileVC.routes)
-            let userDefaults = UserDefaults.standard
-            userDefaults.set(encodedData, forKey: "routes")
-            convertedProfileVC.routeTableView.reloadData()
-            
+            saveData()
+            convertedProfileVC.favRoutes()
         }
     }
 }
